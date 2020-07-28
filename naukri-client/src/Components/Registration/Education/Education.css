@@ -1,0 +1,53 @@
+.btngroup .button {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  color: #6f6f6f;
+  padding: 7px 38px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+  border-right: none;
+  text-decoration: none;
+}
+
+.btngroup .button:last-child {
+  border: 1px solid #ced4da;
+}
+
+.btngroup .btn-primary:active {
+  background: #ccc;
+  color: #000;
+}
+
+.add-more {
+  color: #007bff;
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.add-more .fa-plus {
+  font-size: smaller;
+}
+
+.btngroup .active,
+.crs-btn:hover {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+/* ========== Media query for the mobile device =============== */
+
+@media (min-width: 320px) and (max-width: 520px) {
+  .btngroup .button {
+    padding: 6px 14px;
+    font-size: 16px;
+  }
+}
+
+.nav-tabs p {
+  margin: 0 auto;
+  text-align: center;
+}

@@ -1,0 +1,265 @@
+/* Personal Page Style */
+
+section .section-title {
+  text-align: center;
+  color: #007b5e;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+#tabs {
+  background: #fff;
+  color: #000;
+}
+
+.nav-tabs {
+  background: #232323;
+  padding: 10px 30%;
+  border-bottom: 0;
+}
+
+#tabs h6.section-title {
+  color: #eee;
+}
+
+#tabs .nav-tabs .nav-link.active {
+  color: #f3f3f3;
+  background-color: transparent;
+  border-color: transparent transparent #f3f3f3;
+  border-bottom: 3px solid !important;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#tabs .nav-tabs .nav-link {
+  color: #eee;
+  font-size: 18px;
+  padding: 0.2rem 1rem !important;
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* .tab-content>.tab-pane {
+    display: block !important;
+} */
+
+::placeholder {
+  color: #6f6f6f !important;
+  font-weight: inherit;
+}
+
+.select-btn {
+  padding: 0.375rem 0.6rem;
+  border: 1px solid #ced4da;
+  color: #6f6f6f;
+  background: none;
+}
+
+::select {
+  color: #b5b5b5 !important;
+}
+
+.file {
+  position: relative;
+  overflow: hidden;
+}
+
+.file input {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
+.upload-btn {
+  background: #5cb85c;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 0;
+}
+
+.or-btn {
+  color: #737373;
+  margin: 0 20px;
+}
+
+.chkboxbtn {
+  font-size: 14px;
+  padding: 0;
+  color: #717171;
+}
+
+.submit-btn {
+  font-size: 18px;
+  padding: 10px 130px;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  background: #0062cc;
+}
+
+.wrapper-bg {
+  width: 990px;
+  margin: 0 auto;
+}
+
+.nav-tabs ul {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.nav-tabs li {
+  list-style: none;
+  float: left;
+  text-align: center;
+  position: relative;
+  width: 140px;
+  padding: 0px 3px;
+}
+
+.col-form-label:after {
+  content: "*";
+  color: #ed2d2c;
+}
+
+.nostar:after {
+  display: none;
+}
+
+.r-text {
+  display: block;
+  color: #4e4e4e;
+  font-size: 13px;
+  margin-top: 4px;
+  line-height: 16px;
+}
+
+.btnic {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  background: #fff;
+}
+
+.crny-btn .active {
+  background-color: #5cb85c;
+  color: #fff;
+}
+
+.col-form-label {
+  font-weight: 500;
+  color: #151515e6;
+}
+
+.btnic .fa {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.form-group,
+.selectpicker span {
+  color: #6f6f6f;
+}
+
+select.form-control:not([size]):not([multiple]) {
+  color: #6f6f6f !important;
+}
+.btn-google {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  height: 34px;
+  margin: 0 2%;
+  position: relative;
+  border: 1px solid #cfd0d1;
+  display: inline-block;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  text-align: center;
+  line-height: 11px;
+}
+.ggle-login {
+  position: absolute;
+  border-left: 1px solid #e0e0e0;
+  padding: 5px 0px 0 15px;
+}
+.vertical-line {
+  position: relative;
+}
+.vertical-line .ggle-text {
+  padding: 2px 4px;
+  top: 36px;
+  left: -26px;
+  background: #fcfcfc;
+  position: absolute;
+  width: 22px;
+  color: #333;
+  font-size: 13px;
+}
+.btn-google span {
+  font-size: 12px;
+  color: #000;
+  padding-left: 5px;
+}
+
+/* ========== Media query for the mobile device =============== */
+
+@media (min-width: 320px) and (max-width: 520px) {
+  .nav-tabs {
+    padding: 4px 4%;
+  }
+  .nav-tabs li {
+    width: auto;
+    padding: 0px 2px;
+  }
+  #tabs .nav-tabs .nav-link.active {
+    font-size: 15px;
+    border-bottom: 2px solid !important;
+  }
+  .nav-link {
+    padding: 0.3rem 0.4rem;
+  }
+  .col-form-label {
+    text-align: left !important;
+    padding-bottom: 5px;
+    font-size: 15px;
+  }
+  #tabs .nav-tabs .nav-link {
+    font-size: 15px;
+  }
+  .form-group {
+    margin-bottom: 5px;
+  }
+  .wrapper-bg {
+    width: 100%;
+  }
+  .submit-btn {
+    font-size: 16px;
+    padding: 8px 60px;
+  }
+  .select-btn {
+    margin-bottom: 10px;
+  }
+  .btn-google {
+    margin-top: 5px;
+  }
+  .ggle-login {
+    position: relative;
+    margin-top: 5px;
+  }
+  .ggle-login p {
+    margin-bottom: 0;
+  }
+  .ggle-login {
+    border-left: none;
+    padding: 0px 0px 0 20px;
+  }
+  .upload-btn-text {
+    font-size: 13px;
+  }
+}

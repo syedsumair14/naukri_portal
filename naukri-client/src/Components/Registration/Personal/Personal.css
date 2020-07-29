@@ -105,6 +105,7 @@ section .section-title {
 
 .wrapper-bg {
   width: 990px;
+  max-width: 64%;
   margin: 0 auto;
 }
 

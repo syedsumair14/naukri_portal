@@ -4,7 +4,7 @@ import "./Education.css";
 export default function EducationComponent() {
   return (
     <div
-      className="tab-pane fade text-dark"
+      // className="tab-pane fade text-dark"
       id="nav-education"
       role="tabpanel"
       aria-labelledby="nav-education-tab"

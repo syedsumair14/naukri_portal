@@ -4,7 +4,7 @@ import "./Employment.css";
 export default function EmploymentComponent() {
   return (
     <div
-      className="tab-pane fade text-dark"
+      // className="tab-pane fade text-dark"
       id="nav-employment"
       role="tabpanel"
       aria-labelledby="nav-employment-tab"

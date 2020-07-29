@@ -1,7 +1,28 @@
 import React from "react";
 import "./Personal.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const PHONE_REGEX = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export default function PersonalComponent() {
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values, onSubmitProps) => {
+      console.log(values);
+    },
+    validationSchema: Yup.object({
+      Name: Yup.string().required("Invalid Name"),
+      email: Yup.string().email("Enter Valid Email").required("Cant Be Empty"),
+      password: Yup.string()
+        .required("No password provided")
+        .min(6, "Too short! Enter Min 6 character"),
+      mobilenumber: Yup.string()
+        .required("No mobile number provided")
+        .matches(PHONE_REGEX, "Enter a valid number"),
+    }),
+  });
+
   return (
     <div
       className="tab-pane fade show active"
@@ -21,10 +42,15 @@ export default function PersonalComponent() {
             <div className="col-sm-6">
               <input
                 type="text"
+                name="Name"
                 id="Name"
                 placeholder="Enter your name"
                 className="form-control rounded-0"
+                {...formik.getFieldProps("Name")}
               />
+              {formik.touched.Name && formik.errors.Name && (
+                <div className="text-danger">{formik.errors.Name}</div>
+              )}
             </div>
             <div className="col-sm-3">
               <div className="ggle-login">
@@ -50,11 +76,16 @@ export default function PersonalComponent() {
             </label>
             <div className="col-sm-6">
               <input
+                name="email"
                 type="email"
                 id="email"
                 placeholder="Enter your email"
                 className="form-control rounded-0"
+                {...formik.getFieldProps("email")}
               />
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-danger">{formik.errors.email}</div>
+              )}
             </div>
             <div className="col-sm-3">
               <span className="r-text"></span>
@@ -69,11 +100,16 @@ export default function PersonalComponent() {
             </label>
             <div className="col-sm-6">
               <input
+                name="password"
                 type="password"
                 id="password"
                 placeholder="Minimum 6 characters"
                 className="form-control rounded-0"
+                {...formik.getFieldProps("password")}
               />
+              {formik.touched.password && formik.errors.password && (
+                <div className="text-danger">{formik.errors.password}</div>
+              )}
             </div>
             <div className="col-sm-3">
               <span className="r-text">
@@ -91,11 +127,16 @@ export default function PersonalComponent() {
             </label>
             <div className="col-sm-6">
               <input
+                name="mobilenumber"
                 type="mobilenumber"
                 id="mobilenumber"
                 placeholder="When recruiter can contact you"
                 className="form-control rounded-0"
+                {...formik.getFieldProps("mobilenumber")}
               />
+              {formik.touched.mobilenumber && formik.errors.mobilenumber && (
+                <div className="text-danger">{formik.errors.mobilenumber}</div>
+              )}
             </div>
             <div className="col-sm-3">
               <span className="r-text">

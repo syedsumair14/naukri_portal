@@ -20,6 +20,9 @@ export default function PersonalComponent() {
       mobilenumber: Yup.string()
         .required("No mobile number provided")
         .matches(PHONE_REGEX, "Enter a valid number"),
+      workExpYear: Yup.string().required("Enter Years"),
+      workExpMonth: Yup.string().required("Enter Months"),
+      resume: Yup.mixed().required("Upload valid resume"),
     }),
   });
 
@@ -155,20 +158,41 @@ export default function PersonalComponent() {
             <div className="col-sm-6">
               <div className="row">
                 <div className="col-sm-6 col-md-6 col-xs-6">
-                  <select className="selectpicker select-btn rounded-0">
+                  <select
+                    name="workExpYear"
+                    id="workExpYear"
+                    {...formik.getFieldProps("workExpYear")}
+                    className="selectpicker select-btn rounded-0"
+                  >
                     <option>Select</option>
                     <option>1</option>
                     <option>2</option>
                   </select>
                   <span> Year(s) </span>
+                  {formik.touched.workExpYear && formik.errors.workExpYear && (
+                    <div className="text-danger">
+                      {formik.errors.workExpYear}
+                    </div>
+                  )}
                 </div>
                 <div className="col-sm-6 col-md-6 col-xs-6">
-                  <select className="selectpicker select-btn rounded-0">
+                  <select
+                    name="workExpMonth"
+                    id="workExpMonth"
+                    {...formik.getFieldProps("workExpMonth")}
+                    className="selectpicker select-btn rounded-0"
+                  >
                     <option>Select</option>
                     <option>1</option>
                     <option>2</option>
                   </select>
                   <span> Month(s) </span>
+                  {formik.touched.workExpMonth &&
+                    formik.errors.workExpMonth && (
+                      <div className="text-danger">
+                        {formik.errors.workExpMonth}
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -188,7 +212,16 @@ export default function PersonalComponent() {
               <span className="file btn upload-btn">
                 {" "}
                 Upload Resume
-                <input type="file" name="file" />
+                <input
+                  name="resume"
+                  id="resume"
+                  {...formik.getFieldProps("resume")}
+                  type="file"
+                  name="file"
+                />
+                {formik.touched.resume && formik.errors.resume && (
+                  <div className="text-danger">{formik.errors.resume}</div>
+                )}
               </span>
               <span className="info upload-btn-text">
                 {" "}

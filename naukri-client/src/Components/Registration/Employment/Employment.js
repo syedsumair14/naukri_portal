@@ -6,7 +6,34 @@ import formikHelper from "../ValidationHelper/FormikHelper";
 
 export default function EmploymentComponent() {
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      designation: "",
+      currCompany: "",
+      annualSalary: "",
+      annualSalaryTh: "",
+      workingSinceYear: "",
+      workingSinceMonth: "",
+      currentLocation: "",
+      skills: "",
+      countryOutside: "",
+      noticePeriod: "",
+      lastWorkingDayYear: "",
+      lastWorkingDayMonth: "",
+      lastWorkingDayDate: "",
+      newSalaryLakhs: "",
+      newSalarythousand: "",
+      offerDesig: "",
+      newCompany: "",
+      industry: "",
+      functionalArea: "",
+      role: "",
+      prevDesignation: "",
+      prevCompany: "",
+      prevDurationMonth: "",
+      prevDurationYear: "",
+      prevDurationYearTo: "",
+      prevDurationMonthTo: "",
+    },
     onSubmit: (values, onSubmitProps) => {
       console.log(values);
     },
@@ -232,6 +259,8 @@ export default function EmploymentComponent() {
             <select
               className="mdb-select md-form form-control rounded-0"
               searchable="Search here.."
+              id="countryOutside"
+              {...formik.getFieldProps("countryOutside")}
             >
               <option value disabled value={1}>
                 Select Country
@@ -259,6 +288,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <select
+              id="noticePeriod"
+              {...formik.getFieldProps("noticePeriod")}
               className="selectpicker form-control rounded-0"
               data-size={9}
             >
@@ -284,7 +315,11 @@ export default function EmploymentComponent() {
             Last Working Day
           </label>
           <div className="col-sm-6">
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="lastWorkingDayYear"
+              {...formik.getFieldProps("lastWorkingDayYear")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Select</option>
               <option>2011</option>
               <option>2012</option>
@@ -298,7 +333,11 @@ export default function EmploymentComponent() {
               <option>2020</option>
             </select>
             <span> Year </span>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="lastWorkingDayMonth"
+              {...formik.getFieldProps("lastWorkingDayMonth")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Select</option>
               <option>Jan</option>
               <option>Feb</option>
@@ -314,7 +353,11 @@ export default function EmploymentComponent() {
               <option>Dec</option>
             </select>
             <span> Month </span>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="lastWorkingDayDate"
+              {...formik.getFieldProps("lastWorkingDayDate")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Select</option>
               <option>1</option>
               <option>2</option>
@@ -349,7 +392,11 @@ export default function EmploymentComponent() {
             <button className="btnic">
               <i className="fa fa-dollar" />
             </button>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="newSalaryLakhs"
+              {...formik.getFieldProps("newSalaryLakhs")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Select</option>
               <option>1</option>
               <option>2</option>
@@ -363,7 +410,11 @@ export default function EmploymentComponent() {
               <option>10</option>
             </select>
             <span> Lakhs </span>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="newSalaryThousand"
+              {...formik.getFieldProps("newSalaryThousand")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Select</option>
               <option>1</option>
               <option>2</option>
@@ -393,6 +444,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <input
+              id="offerDesig"
+              {...formik.getFieldProps("offerDesig")}
               type="text"
               placeholder="New designation offered"
               className="form-control rounded-0"
@@ -412,6 +465,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <input
+              id="newCompany"
+              {...formik.getFieldProps("newCompany")}
               type="text"
               placeholder="Name of the new organization"
               className="form-control rounded-0"
@@ -450,6 +505,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <select
+              id="industry"
+              {...formik.getFieldProps("industry")}
               className="selectpicker form-control rounded-0"
               data-size={9}
             >
@@ -473,7 +530,11 @@ export default function EmploymentComponent() {
             Functional Area
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="functionalArea"
+              {...formik.getFieldProps("functionalArea")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option value disabled value={1}>
                 Select the department that you work in
               </option>
@@ -497,6 +558,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <select
+              id="role"
+              {...formik.getFieldProps("role")}
               className="selectpicker form-control rounded-0"
               data-size={9}
               value={1}
@@ -526,6 +589,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <input
+              id="prevDesignation"
+              {...formik.getFieldProps("prevDesignation")}
               type="text"
               placeholder="Your job title"
               className="form-control rounded-0"
@@ -545,6 +610,8 @@ export default function EmploymentComponent() {
           </label>
           <div className="col-sm-6">
             <input
+              id="prevCompany"
+              {...formik.getFieldProps("prevCompany")}
               type="text"
               placeholder="Name of the company/Organization"
               className="form-control rounded-0"
@@ -563,7 +630,11 @@ export default function EmploymentComponent() {
             Duration
           </label>
           <div className="col-sm-6 crny-btn">
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="prevDurationYear"
+              {...formik.getFieldProps("prevDurationYear")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Year</option>
               <option>2011</option>
               <option>2012</option>
@@ -576,7 +647,11 @@ export default function EmploymentComponent() {
               <option>2019</option>
               <option>2020</option>
             </select>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="prevDurationMonth"
+              {...formik.getFieldProps("prevDurationMonth")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Month</option>
               <option>Jan</option>
               <option>Feb</option>
@@ -592,7 +667,11 @@ export default function EmploymentComponent() {
               <option>Dec</option>
             </select>
             <span className="px-3">to</span>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="prevDurationYearTo"
+              {...formik.getFieldProps("prevDurationYearTo")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Year</option>
               <option>2011</option>
               <option>2012</option>
@@ -605,7 +684,11 @@ export default function EmploymentComponent() {
               <option>2019</option>
               <option>2020</option>
             </select>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="prevDurationMonthTo"
+              {...formik.getFieldProps("prevDurationMonthTo")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Month</option>
               <option>Jan</option>
               <option>Feb</option>
@@ -854,9 +937,11 @@ export default function EmploymentComponent() {
         <div className="form-group row">
           <div className="col-sm-12">
             <div className="text-center conti-btn">
-              <button type="submit" className="submit-btn mt-3">
-                Continue
-              </button>
+              <input
+                type="submit"
+                className="submit-btn mt-3"
+                value="Continue"
+              />
             </div>
           </div>
         </div>

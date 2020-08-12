@@ -7,9 +7,18 @@ const PHONE_REGEX = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 
 export default function PersonalComponent() {
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {
+      Name: "",
+      email: "",
+      password: "",
+      mobilenumber: "",
+      workExpYear: "",
+      workExpMonth: "",
+      resume: "",
+    },
     onSubmit: (values, onSubmitProps) => {
       console.log(values);
+      // onSubmitProps.setSubmitting(false);
     },
     validationSchema: Yup.object({
       Name: Yup.string().required("Invalid Name"),
@@ -25,7 +34,6 @@ export default function PersonalComponent() {
       resume: Yup.mixed().required("Upload valid resume"),
     }),
   });
-
   return (
     <div
       className="tab-pane fade show active"
@@ -34,7 +42,11 @@ export default function PersonalComponent() {
       aria-labelledby="nav-home-tab"
     >
       <div className="col-md-12 mt-3">
-        <form className="form-horizontal personal-detail" role="form">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="form-horizontal personal-detail"
+          role="form"
+        >
           <div className="form-group row mb-4">
             <label
               htmlFor="Name"
@@ -47,6 +59,7 @@ export default function PersonalComponent() {
                 type="text"
                 name="Name"
                 id="Name"
+                value={formik.values.Name}
                 placeholder="Enter your name"
                 className="form-control rounded-0"
                 {...formik.getFieldProps("Name")}
@@ -241,9 +254,13 @@ export default function PersonalComponent() {
           <div className="form-group row mb-4">
             <div className="col-sm-12">
               <div className="text-center">
-                <button type="submit" className="submit-btn mt-3">
-                  Register Now
-                </button>
+                <input
+                  type="submit"
+                  // onClick={formik.handleSubmit}
+                  className="submit-btn mt-3"
+                  value="Register now"
+                  disabled={!formik.isValid || formik.isSubmitting}
+                />
               </div>
             </div>
           </div>

@@ -1,7 +1,26 @@
 import React from "react";
 import "./Employment.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import formikHelper from "../ValidationHelper/FormikHelper";
 
 export default function EmploymentComponent() {
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values, onSubmitProps) => {
+      console.log(values);
+    },
+    validationSchema: Yup.object({
+      designation: Yup.string().required("Choose designation"),
+      currCompany: Yup.string().required("Choose company"),
+      annualSalary: Yup.string().required("Select Annual Salary"),
+      annualSalaryTh: Yup.string().required("Select Annual Salary"),
+      workingSinceYear: Yup.string().required("Choose Years/Months"),
+      workingSinceMonth: Yup.string().required("Choose Years/Months"),
+      currentLocation: Yup.string().required("Tell us your current location"),
+      skills: Yup.string().required("Enter skills"),
+    }),
+  });
   return (
     <div
       // className="tab-pane fade text-dark"
@@ -19,6 +38,8 @@ export default function EmploymentComponent() {
             <select
               className="selectpicker form-control rounded-0"
               data-size={5}
+              id="designation"
+              {...formik.getFieldProps("designation")}
             >
               <option value={1}>IT Manager</option>
               <option value={2}>UI Developer</option>
@@ -27,6 +48,9 @@ export default function EmploymentComponent() {
               <option value={5}>Angular Developer</option>
               <option value={6}>Web Designer</option>
             </select>
+            {formik.touched.designation && formik.errors.designation && (
+              <div className="text-danger">{formik.errors.designation}</div>
+            )}
           </div>
           <div className="col-sm-3">
             <span className="r-text"> Job Title/Role </span>
@@ -42,12 +66,14 @@ export default function EmploymentComponent() {
               className="selectpicker form-control rounded-0"
               data-size={5}
               autoFocus
+              {...formik.getFieldProps("currCompany")}
             >
               <option value={1}>Tata Consultancy</option>
               <option value={2}>Infosys</option>
               <option value={3}>HCL</option>
               <option value={4}>Wipro</option>
             </select>
+            {formikHelper(formik, "currCompany")}
           </div>
           <div className="col-sm-3">
             <span className="r-text">
@@ -73,7 +99,11 @@ export default function EmploymentComponent() {
                 <button className="btnic">
                   <i className="fa fa-dollar" />
                 </button>
-                <select className="selectpicker select-btn rounded-0">
+                <select
+                  id="annualSalary"
+                  {...formik.getFieldProps("annualSalary")}
+                  className="selectpicker select-btn rounded-0"
+                >
                   <option>Select</option>
                   <option>1</option>
                   <option>2</option>
@@ -87,9 +117,14 @@ export default function EmploymentComponent() {
                   <option>10</option>
                 </select>
                 <span> Lakhs </span>
+                {formikHelper(formik, "annualSalary")}
               </div>
               <div className="col-sm-6 col-md-6 col-xs-6">
-                <select className="selectpicker select-btn rounded-0">
+                <select
+                  id="annualSalaryTh"
+                  {...formik.getFieldProps("annualSalaryTh")}
+                  className="selectpicker select-btn rounded-0"
+                >
                   <option>Select</option>
                   <option>1</option>
                   <option>2</option>
@@ -104,6 +139,7 @@ export default function EmploymentComponent() {
                   <option>11</option>
                 </select>
                 <span> Thousand </span>
+                {formikHelper(formik, "annualSalaryTh")}
               </div>
             </div>
           </div>
@@ -120,7 +156,11 @@ export default function EmploymentComponent() {
             Working Since{" "}
           </label>
           <div className="col-sm-6 crny-btn">
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="workingSinceYear"
+              {...formik.getFieldProps("workingSinceYear")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Year</option>
               <option>1</option>
               <option>2</option>
@@ -133,7 +173,11 @@ export default function EmploymentComponent() {
               <option>9</option>
               <option>10</option>
             </select>
-            <select className="selectpicker select-btn rounded-0">
+            <select
+              id="workingSinceMonth"
+              {...formik.getFieldProps("workingSinceMonth")}
+              className="selectpicker select-btn rounded-0"
+            >
               <option>Month</option>
               <option>1</option>
               <option>2</option>
@@ -161,6 +205,8 @@ export default function EmploymentComponent() {
               <option>9</option>
               <option>10</option>
             </select>
+            {formikHelper(formik, "workingSinceYear")}
+            {formikHelper(formik, "workingSinceMonth")}
           </div>
           <div className="col-sm-3">
             <span className="r-text"></span>
@@ -176,7 +222,10 @@ export default function EmploymentComponent() {
               type="text"
               placeholder="Tell us about your current location"
               className="form-control rounded-0"
+              id="currentLocation"
+              {...formik.getFieldProps("currentLocation")}
             />
+            {formikHelper(formik, "currentLocation")}
             <p className="small">
               <input type="checkbox" className="mt-2" /> Outside India
             </p>
@@ -382,7 +431,10 @@ export default function EmploymentComponent() {
               type="text"
               placeholder="Enter your areas of expertise/specialization"
               className="form-control rounded-0"
+              id="skills"
+              {...formik.getFieldProps("skills")}
             />
+            {formikHelper(formik, "skills")}
           </div>
           <div className="col-sm-3">
             <span className="r-text">Enter your desired role or skills </span>

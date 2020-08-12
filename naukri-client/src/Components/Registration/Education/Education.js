@@ -1,7 +1,28 @@
 import React from "react";
 import "./Education.css";
 
+import { useFormik } from "formik";
+import formikHelper from "../ValidationHelper/FormikHelper";
+import * as Yup from "yup";
+
 export default function EducationComponent() {
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values, onSubmitProps) => {
+      console.log(values);
+    },
+    validationSchema: Yup.object({
+      highestQualification: Yup.string().required("Choose qualifications"),
+      board: Yup.string().required("Choose board"),
+      passingYear: Yup.string().required("Enter year of passing"),
+      medium: Yup.string().required("Choose language medium"),
+      percentage: Yup.string().required("percentage"),
+      course: Yup.string().required("Choose course"),
+      specialization: Yup.string().required("Choose your specialization"),
+      uniCol: Yup.string().required("Choose your university/college"),
+      uniPassingYear: Yup.string().required("Enter year of passing"),
+    }),
+  });
   return (
     <div
       // className="tab-pane fade text-dark"
@@ -19,6 +40,8 @@ export default function EducationComponent() {
             <select
               className="mdb-select md-form form-control rounded-0"
               searchable="Search here.."
+              id="highestQualification"
+              {...formik.getFieldProps("highestQualification")}
             >
               <option value disabled>
                 Select your highest qualification
@@ -29,6 +52,7 @@ export default function EducationComponent() {
               <option value={4}>10th</option>
               <option value={5}>12th</option>
             </select>
+            {formikHelper(formik, "highestQualification")}
           </div>
           <div className="col-sm-3">
             <span className="r-text">
@@ -46,6 +70,8 @@ export default function EducationComponent() {
             <select
               className="mdb-select md-form form-control rounded-0"
               searchable="Search here.."
+              id="board"
+              {...formik.getFieldProps("board")}
             >
               <option value disabled>
                 Please select board
@@ -56,6 +82,7 @@ export default function EducationComponent() {
               <option value={4}>National Open School</option>
               <option value={5}>B.Tech</option>
             </select>
+            {formikHelper(formik, "board")}
           </div>
           <div className="col-sm-3">
             <span className="r-text">
@@ -69,9 +96,12 @@ export default function EducationComponent() {
             Year of Passing{" "}
           </label>
           <div className="col-sm-6">
+            {formikHelper(formik, "passingYear")}
             <select
               className="mdb-select md-form form-control rounded-0"
               searchable="Search here.."
+              id="passingYear"
+              {...formik.getFieldProps("passingYear")}
             >
               <option value disabled>
                 Please select your completion
@@ -98,7 +128,11 @@ export default function EducationComponent() {
             Medium{" "}
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="medium"
+              {...formik.getFieldProps("medium")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option value disabled>
                 Please select language medium
               </option>
@@ -111,6 +145,7 @@ export default function EducationComponent() {
               <option>Tamil</option>
               <option>Sanskrit</option>
             </select>
+            {formikHelper(formik, "medium")}
           </div>
           <div className="col-sm-3">
             <span className="r-text"> </span>
@@ -121,7 +156,11 @@ export default function EducationComponent() {
             Percentage{" "}
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="percentage"
+              {...formik.getFieldProps("percentage")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option value disabled>
                 Please select percentage
               </option>
@@ -139,6 +178,7 @@ export default function EducationComponent() {
               <option>90-94.9%</option>
               <option>95-99.9%</option>
             </select>
+            {formikHelper(formik, "percentage")}
           </div>
           <div className="col-sm-3">
             <span className="r-text"> </span>
@@ -151,6 +191,8 @@ export default function EducationComponent() {
           </label>
           <div className="col-sm-6">
             <select
+              id="course"
+              {...formik.getFieldProps("course")}
               className="mdb-select md-form form-control rounded-0"
               searchable="Search here.."
             >
@@ -163,6 +205,7 @@ export default function EducationComponent() {
               <option value={4}>BAMS</option>
               <option value={5}>B.Tech</option>
             </select>
+            {formikHelper(formik, "course")}
           </div>
           <div className="col-sm-3">
             <span className="r-text">
@@ -177,7 +220,11 @@ export default function EducationComponent() {
             Specialization
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="specialization"
+              {...formik.getFieldProps("specialization")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option value disabled>
                 Select Specialization{" "}
               </option>
@@ -185,6 +232,7 @@ export default function EducationComponent() {
               <option value={2}>Fronted Developer </option>
               <option value={3}>Product Manager</option>
             </select>
+            {formikHelper(formik, "specialization")}
           </div>
           <div className="col-sm-3">
             <span className="r-text"> </span>
@@ -196,7 +244,11 @@ export default function EducationComponent() {
             University/College
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="uniCol"
+              {...formik.getFieldProps("uniCol")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option value disabled>
                 Institute Name{" "}
               </option>
@@ -206,6 +258,7 @@ export default function EducationComponent() {
               <option value={3}>Hans Raj College</option>
               <option value={3}>Jesus &amp; Mary College</option>
             </select>
+            {formikHelper(formik, "uniCol")}
           </div>
           <div className="col-sm-3">
             <span className="r-text"> Tell us about your institute.</span>
@@ -243,7 +296,11 @@ export default function EducationComponent() {
             Passing Year
           </label>
           <div className="col-sm-6">
-            <select className="mdb-select md-form form-control rounded-0">
+            <select
+              id="uniPassingYear"
+              {...formik.getFieldProps("uniPassingYear")}
+              className="mdb-select md-form form-control rounded-0"
+            >
               <option>Select</option>
               <option>2019</option>
               <option>2018</option>
@@ -262,6 +319,7 @@ export default function EducationComponent() {
                 <i className="fa fa-plus" /> Add more education
               </a>
             </p>
+            {formikHelper(formik, "uniPassingYear")}
             <div className="horizontal-line" />
           </div>
         </div>

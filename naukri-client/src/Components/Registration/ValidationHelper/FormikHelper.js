@@ -1,10 +1,8 @@
 import React from "react";
 
-export default function formikHelper(formik, name) {
+export default function formikHelper(touched, errors, name) {
   return (
-    formik.touched[name] &&
-    formik.errors[name] && (
-      <div className="text-danger">{formik.errors[name]}</div>
-    )
+    touched[name] &&
+    errors[name] && <div className="text-danger">{errors[name]}</div>
   );
 }

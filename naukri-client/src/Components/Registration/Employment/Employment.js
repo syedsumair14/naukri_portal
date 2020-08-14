@@ -1,6 +1,6 @@
 import React from "react";
 import "./Employment.css";
-import { useFormik } from "formik";
+import { useFormik, FieldArray } from "formik";
 import * as Yup from "yup";
 import formikHelper from "../ValidationHelper/FormikHelper";
 
@@ -33,6 +33,7 @@ export default function EmploymentComponent() {
       prevDurationYear: "",
       prevDurationYearTo: "",
       prevDurationMonthTo: "",
+      otherEmployement: [1],
     },
     onSubmit: (values, onSubmitProps) => {
       console.log(values);
@@ -48,6 +49,7 @@ export default function EmploymentComponent() {
       skills: Yup.string().required("Enter skills"),
     }),
   });
+  console.log("help", formik);
   return (
     <div
       // className="tab-pane fade text-dark"
@@ -55,7 +57,11 @@ export default function EmploymentComponent() {
       role="tabpanel"
       aria-labelledby="nav-employment-tab"
     >
-      <form className="form-horizontal mt-3 empmnt-section" role="form">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="form-horizontal mt-3 empmnt-section"
+        role="form"
+      >
         <div className="form-group row mb-4">
           <label htmlFor="Name" className="col-sm-3 col-form-label text-right">
             {" "}
@@ -709,119 +715,7 @@ export default function EmploymentComponent() {
             <span className="r-text"> </span>
           </div>
         </div>
-        <div className="form-group row mb-4">
-          <div className="col-sm-12 offset-sm-3">
-            <h6>Other Employment</h6>
-          </div>
-          <label
-            htmlFor="Name"
-            className="col-sm-3 col-form-label text-right nostar"
-          >
-            {" "}
-            Designation{" "}
-          </label>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              placeholder="Your job title"
-              className="form-control rounded-0"
-            />
-          </div>
-          <div className="col-sm-3">
-            <span className="r-text"> </span>
-          </div>
-        </div>
-        <div className="form-group row mb-4">
-          <label
-            htmlFor="Name"
-            className="col-sm-3 col-form-label text-right nostar"
-          >
-            {" "}
-            Company{" "}
-          </label>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              placeholder="Name of the company/Organization"
-              className="form-control rounded-0"
-            />
-          </div>
-          <div className="col-sm-3">
-            <span className="r-text"> </span>
-          </div>
-        </div>
-        <div className="form-group row mb-4">
-          <label
-            htmlFor="Name"
-            className="col-sm-3 col-form-label text-right nostar"
-          >
-            {" "}
-            Duration
-          </label>
-          <div className="col-sm-6 crny-btn">
-            <select className="selectpicker select-btn rounded-0">
-              <option>Year</option>
-              <option>2011</option>
-              <option>2012</option>
-              <option>2013</option>
-              <option>2014</option>
-              <option>2015</option>
-              <option>2016</option>
-              <option>2017</option>
-              <option>2018</option>
-              <option>2019</option>
-              <option>2020</option>
-            </select>
-            <select className="selectpicker select-btn rounded-0">
-              <option>Month</option>
-              <option>Jan</option>
-              <option>Feb</option>
-              <option>Mar</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>Aug</option>
-              <option>Sep</option>
-              <option>Oct</option>
-              <option>Nov</option>
-              <option>Dec</option>
-            </select>
-            <span className="px-3">to</span>
-            <select className="selectpicker select-btn rounded-0">
-              <option>Year</option>
-              <option>2011</option>
-              <option>2012</option>
-              <option>2013</option>
-              <option>2014</option>
-              <option>2015</option>
-              <option>2016</option>
-              <option>2017</option>
-              <option>2018</option>
-              <option>2019</option>
-              <option>2020</option>
-            </select>
-            <select className="selectpicker select-btn rounded-0">
-              <option>Month</option>
-              <option>Jan</option>
-              <option>Feb</option>
-              <option>Mar</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>Aug</option>
-              <option>Sep</option>
-              <option>Oct</option>
-              <option>Nov</option>
-              <option>Dec</option>
-            </select>
-            <div className="horizontal-line" />
-          </div>
-          <div className="col-sm-3">
-            <span className="r-text"> </span>
-          </div>
-        </div>
+
         <div className="form-group row mb-4">
           <div className="col-sm-12 offset-sm-3">
             <h6>Other Employment</h6>
@@ -934,6 +828,7 @@ export default function EmploymentComponent() {
             <span className="r-text"> </span>
           </div>
         </div>
+
         <div className="form-group row">
           <div className="col-sm-12">
             <div className="text-center conti-btn">

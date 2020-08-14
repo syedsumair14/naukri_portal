@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Personal.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -6,18 +6,33 @@ import * as Yup from "yup";
 const PHONE_REGEX = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export default function PersonalComponent() {
+  const [file, setFile] = useState(null);
+  const [customErrors, setCustomErrors] = useState({});
+  const FILE_SIZE = 1414 * 1414;
+  const SUPPORTED_FORMATS = [
+    "image/jpg",
+    "image/jpeg",
+    "image/gif",
+    "image/png",
+  ];
   const formik = useFormik({
     initialValues: {
-      Name: "",
-      email: "",
-      password: "",
-      mobilenumber: "",
-      workExpYear: "",
-      workExpMonth: "",
-      resume: "",
+      Name: "s",
+      email: "s@s.com",
+      password: "summmmmmmm",
+      mobilenumber: "1111111111",
+      workExpYear: "1",
+      workExpMonth: "1",
+      // resume: "",
+      terms: false,
     },
     onSubmit: (values, onSubmitProps) => {
-      console.log(values);
+      if (!file) {
+        return setCustomErrors({ ...customErrors, fileError: "Uplaod resume" });
+      }
+      if (Object.keys(customErrors).length === 0) {
+        console.log(values, "submit", onSubmitProps);
+      }
       // onSubmitProps.setSubmitting(false);
     },
     validationSchema: Yup.object({
@@ -31,9 +46,21 @@ export default function PersonalComponent() {
         .matches(PHONE_REGEX, "Enter a valid number"),
       workExpYear: Yup.string().required("Enter Years"),
       workExpMonth: Yup.string().required("Enter Months"),
-      resume: Yup.mixed().required("Upload valid resume"),
+      // resume: Yup.mixed().required("Upload valid resume"),
+      terms: Yup.bool().oneOf([true], "Agree to terms and conditions"),
     }),
   });
+
+  useEffect(() => {
+    if (file && file.size > 2000000) {
+      return setCustomErrors({
+        ...customErrors,
+        fileError: "Upload file less than 2 MB",
+      });
+    }
+    setCustomErrors({});
+  }, [file]);
+
   return (
     <div
       className="tab-pane fade show active"
@@ -228,27 +255,44 @@ export default function PersonalComponent() {
                 <input
                   name="resume"
                   id="resume"
-                  {...formik.getFieldProps("resume")}
+                  // {...formik.getFieldProps("resume")}
                   type="file"
                   name="file"
+                  onChange={(e) => setFile(e.target.files[0])}
                 />
-                {formik.touched.resume && formik.errors.resume && (
-                  <div className="text-danger">{formik.errors.resume}</div>
-                )}
               </span>
               <span className="info upload-btn-text">
                 {" "}
                 doc, docx, rtf, pdf - 2MB max{" "}
               </span>
+              {file && <div className="font-weight-bold">{file.name}</div>}
+              {/* {formik.touched.resume && formik.errors.resume && (
+                <div className="text-danger">{formik.errors.resume}</div>
+              )} */}
+              {customErrors.fileError && (
+                <div className="text-danger">{customErrors.fileError}</div>
+              )}
               {/* <p className="or-btn text-mute ml-5 mb-0">- or -</p>
               <a href className="primary-link">
                 copy-paste your resume here
               </a> */}
               <br />
-              <input type="checkbox" className="mt-3" />
+              <input
+                id="terms"
+                name="terms"
+                {...formik.getFieldProps("terms")}
+                type="checkbox"
+                className="mt-3"
+                onChange={() =>
+                  formik.setFieldValue("terms", !formik.values.terms)
+                }
+              />
               <label className="chkboxbtn">
                 I agreed to the <a href="#"> Terms and Conditions.</a>
               </label>
+              {formik.touched && formik.errors.terms && (
+                <div className="text-danger">{formik.errors.terms}</div>
+              )}
             </div>
           </div>
           <div className="form-group row mb-4">
@@ -259,7 +303,7 @@ export default function PersonalComponent() {
                   // onClick={formik.handleSubmit}
                   className="submit-btn mt-3"
                   value="Register now"
-                  disabled={!formik.isValid || formik.isSubmitting}
+                  // disabled={!formik.isValid || formik.isSubmitting}
                 />
               </div>
             </div>

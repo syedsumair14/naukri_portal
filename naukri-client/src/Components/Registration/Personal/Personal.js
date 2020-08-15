@@ -17,12 +17,12 @@ export default function PersonalComponent() {
   ];
   const formik = useFormik({
     initialValues: {
-      Name: "s",
-      email: "s@s.com",
-      password: "summmmmmmm",
-      mobilenumber: "1111111111",
-      workExpYear: "1",
-      workExpMonth: "1",
+      Name: "",
+      email: "",
+      password: "",
+      mobilenumber: "",
+      workExpYear: "",
+      workExpMonth: "",
       // resume: "",
       terms: false,
     },
@@ -31,7 +31,8 @@ export default function PersonalComponent() {
         return setCustomErrors({ ...customErrors, fileError: "Uplaod resume" });
       }
       if (Object.keys(customErrors).length === 0) {
-        console.log(values, "submit", onSubmitProps);
+        console.log({ ...values, file }, "submit this");
+        onSubmitProps.resetForm();
       }
       // onSubmitProps.setSubmitting(false);
     },
@@ -283,6 +284,7 @@ export default function PersonalComponent() {
                 {...formik.getFieldProps("terms")}
                 type="checkbox"
                 className="mt-3"
+                checked={formik.values.terms}
                 onChange={() =>
                   formik.setFieldValue("terms", !formik.values.terms)
                 }

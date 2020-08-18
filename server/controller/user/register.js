@@ -19,12 +19,10 @@ exports.registerUser = async (req, res, next) => {
     mobile_no,
     work_exp_years,
     work_exp_month,
-    // resume
     current_location = "india",
     created_at = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
   } = req.body;
 
-  console.log(current_location, "locaton", created_at);
   let resume = req.file.path;
 
   try {

@@ -1,10 +1,17 @@
 const express = require("express");
 const registerationValidation = require("../../../utils/sanitization/user/userValidation");
 const { registerUser } = require("../../../controller/user/register");
-const uplaod = require("../../../app");
+const {
+  validateEmployment,
+} = require("../../../utils/sanitization/user/employementUpdate");
+const {
+  employmentUpdateController,
+} = require("../../../controller/user/employmentUpdate");
+
 const router = express.Router();
 
 router.post("/register", registerationValidation, registerUser);
-// router.post("/uploadResume", uplaod.single("myFile"));
+router.put("/employmentUpdate", validateEmployment, employmentUpdateController);
+router.put("/educationUpdate");
 
 module.exports = router;

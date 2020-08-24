@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Employment.css";
 import { useFormik, FieldArray, Formik } from "formik";
 import * as Yup from "yup";
 import formikHelper from "../ValidationHelper/FormikHelper";
 import { useDispatch } from "react-redux";
 import { UpdateEmployment } from "../../../GlobalStore/Actions/EmploymentAction";
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
 
 const validationSchema = Yup.object({
   designation: Yup.string().required("Choose designation"),
@@ -27,6 +29,7 @@ const previousCompanySchema = {
 };
 
 export default function EmploymentComponent() {
+  const [tags, setTags] = useState([]);
   const dispatch = useDispatch();
 
   return (
@@ -42,17 +45,19 @@ export default function EmploymentComponent() {
           currCompany: "",
           annualSalary: "",
           annualSalaryTh: "",
+          annualSalaryCurrency: "",
           workingSinceYear: "",
           workingSinceMonth: "",
           currentLocation: "",
-          skills: "",
+          skills: [],
           countryOutside: "",
           noticePeriod: "",
           lastWorkingDayYear: "",
           lastWorkingDayMonth: "",
           lastWorkingDayDate: "",
           newSalaryLakhs: "",
-          newSalarythousand: "",
+          newSalaryThousand: "",
+          newSalaryCurrency: "",
           offerDesig: "",
           newCompany: "",
           industry: "",
@@ -64,6 +69,7 @@ export default function EmploymentComponent() {
           console.log(val);
           dispatch(UpdateEmployment(val));
         }}
+        validationSchema={validationSchema}
       >
         {({
           values,
@@ -158,10 +164,24 @@ export default function EmploymentComponent() {
               <div className="col-sm-6">
                 <div className="row">
                   <div className="col-sm-6 col-md-6 col-xs-6 crny-btn">
-                    <button className="btnic active">
+                    <button
+                      onClick={() =>
+                        setFieldValue("annualSalaryCurrency", "INR")
+                      }
+                      className={`btnic ${
+                        values.annualSalaryCurrency === "INR" ? "active" : ""
+                      }`}
+                    >
                       <i className="fa fa-rupee" />
                     </button>
-                    <button className="btnic">
+                    <button
+                      onClick={() =>
+                        setFieldValue("annualSalaryCurrency", "USD")
+                      }
+                      className={`btnic ${
+                        values.annualSalaryCurrency === "USD" ? "active" : ""
+                      }`}
+                    >
                       <i className="fa fa-dollar" />
                     </button>
                     <select
@@ -459,10 +479,20 @@ export default function EmploymentComponent() {
                 New Offered Salary{" "}
               </label>
               <div className="col-sm-6 crny-btn">
-                <button className="btnic active">
+                <button
+                  onClick={() => setFieldValue("newSalaryCurrency", "INR")}
+                  className={`btnic ${
+                    values.newSalaryCurrency === "INR" ? "active" : ""
+                  }`}
+                >
                   <i className="fa fa-rupee" />
                 </button>
-                <button className="btnic">
+                <button
+                  onClick={() => setFieldValue("newSalaryCurrency", "USD")}
+                  className={`btnic ${
+                    values.newSalaryCurrency === "USD" ? "active" : ""
+                  }`}
+                >
                   <i className="fa fa-dollar" />
                 </button>
                 <select
@@ -570,7 +600,13 @@ export default function EmploymentComponent() {
                 Skills
               </label>
               <div className="col-sm-6">
-                <input
+                <TagsInput
+                  value={values.skills}
+                  onChange={(tag) => setFieldValue("skills", tag)}
+                  // onChange={::this.handleChange}
+                />
+
+                {/* <input
                   type="text"
                   placeholder="Enter your areas of expertise/specialization"
                   className="form-control rounded-0"
@@ -579,7 +615,7 @@ export default function EmploymentComponent() {
                   onBlur={handleBlur}
                   onChange={handleBlur}
                   value={values.skills}
-                />
+                /> */}
                 {formikHelper(touched, errors, "skills")}
               </div>
               <div className="col-sm-3">
@@ -664,7 +700,6 @@ export default function EmploymentComponent() {
                   value={values.role}
                   className="selectpicker form-control rounded-0"
                   data-size={9}
-                  value={1}
                 >
                   <option value={1}>Select the role that you work in</option>
                   <option value={1}>Tata Consultancy</option>
@@ -836,7 +871,7 @@ export default function EmploymentComponent() {
                 <>
                   {values.previousCompany.map((company, idx) => {
                     return (
-                      <>
+                      <React.Fragment key={`prevCom-${idx}`}>
                         <div className="form-group row mb-4">
                           <div className="col-sm-12 offset-sm-3">
                             <h6>Other Employment</h6>
@@ -850,6 +885,13 @@ export default function EmploymentComponent() {
                           </label>
                           <div className="col-sm-6">
                             <input
+                              id={`previousEmployment.${idx}.prevDesignation`}
+                              name={`previousEmployment.${idx}.prevDesignation`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={
+                                values.previousCompany[idx].prevDesignation
+                              }
                               type="text"
                               placeholder="Your job title"
                               className="form-control rounded-0"
@@ -869,6 +911,11 @@ export default function EmploymentComponent() {
                           </label>
                           <div className="col-sm-6">
                             <input
+                              id={`previousEmployment.${idx}.prevCompany`}
+                              name={`previousEmployment.${idx}.prevCompany`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.previousCompany[idx].prevCompany}
                               type="text"
                               placeholder="Name of the company/Organization"
                               className="form-control rounded-0"
@@ -887,7 +934,16 @@ export default function EmploymentComponent() {
                             Duration
                           </label>
                           <div className="col-sm-6 crny-btn">
-                            <select className="selectpicker select-btn rounded-0">
+                            <select
+                              id={`previousEmployment.${idx}.prevDurationYear`}
+                              name={`previousEmployment.${idx}.prevDurationYear`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={
+                                values.previousCompany[idx].prevDurationYear
+                              }
+                              className="selectpicker select-btn rounded-0"
+                            >
                               <option>Year</option>
                               <option>2011</option>
                               <option>2012</option>
@@ -900,7 +956,16 @@ export default function EmploymentComponent() {
                               <option>2019</option>
                               <option>2020</option>
                             </select>
-                            <select className="selectpicker select-btn rounded-0">
+                            <select
+                              id={`previousEmployment.${idx}.prevDurationMonth`}
+                              name={`previousEmployment.${idx}.prevDurationMonth`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={
+                                values.previousCompany[idx].prevDurationMonth
+                              }
+                              className="selectpicker select-btn rounded-0"
+                            >
                               <option>Month</option>
                               <option>Jan</option>
                               <option>Feb</option>
@@ -916,7 +981,16 @@ export default function EmploymentComponent() {
                               <option>Dec</option>
                             </select>
                             <span className="px-3">to</span>
-                            <select className="selectpicker select-btn rounded-0">
+                            <select
+                              id={`previousEmployment.${idx}.prevDurationYearTo`}
+                              name={`previousEmployment.${idx}.prevDurationYearTo`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={
+                                values.previousCompany[idx].prevDurationYearTo
+                              }
+                              className="selectpicker select-btn rounded-0"
+                            >
                               <option>Year</option>
                               <option>2011</option>
                               <option>2012</option>
@@ -929,7 +1003,16 @@ export default function EmploymentComponent() {
                               <option>2019</option>
                               <option>2020</option>
                             </select>
-                            <select className="selectpicker select-btn rounded-0">
+                            <select
+                              id={`previousEmployment.${idx}.prevDurationMonthTo`}
+                              name={`previousEmployment.${idx}.prevDurationMonthTo`}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={
+                                values.previousCompany[idx].prevDurationMonthTo
+                              }
+                              className="selectpicker select-btn rounded-0"
+                            >
                               <option>Month</option>
                               <option>Jan</option>
                               <option>Feb</option>
@@ -949,7 +1032,7 @@ export default function EmploymentComponent() {
                             <span className="r-text"> </span>
                           </div>
                         </div>
-                      </>
+                      </React.Fragment>
                     );
                   })}
                 </>

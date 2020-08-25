@@ -1,5 +1,5 @@
 const { body } = require("express-validator");
-
+console.log("sanitize");
 exports.validateEmployment = [
   body("current_designation").not().isEmpty().withMessage("Select designation"),
   body("current_company").not().isEmpty().withMessage("Select company"),
@@ -12,7 +12,6 @@ exports.validateEmployment = [
   body("work_start_year").not().isEmpty().withMessage("Select Start year"),
   body("work_start_month").not().isEmpty().withMessage("Select Start month"),
   body("work_end_year").not().isEmpty().withMessage("Select End year"),
-  body("work_end_month").not().isEmpty().withMessage("Select End month"),
   body("current_location")
     .not()
     .isEmpty()

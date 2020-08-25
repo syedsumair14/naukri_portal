@@ -13,8 +13,9 @@ const validationSchema = Yup.object({
   currCompany: Yup.string().required("Choose company"),
   annualSalary: Yup.string().required("Select Annual Salary"),
   annualSalaryTh: Yup.string().required("Select Annual Salary"),
-  workingSinceYear: Yup.string().required("Choose Years/Months"),
-  workingSinceMonth: Yup.string().required("Choose Years/Months"),
+  workingSinceYear: Yup.string().required("Choose Years"),
+  workingSinceMonth: Yup.string().required("Choose Months"),
+  workingEndYear: Yup.string().required("Choose year"),
   currentLocation: Yup.string().required("Tell us your current location"),
   skills: Yup.string().required("Enter skills"),
 });
@@ -48,10 +49,13 @@ export default function EmploymentComponent() {
           annualSalaryCurrency: "",
           workingSinceYear: "",
           workingSinceMonth: "",
+          workingEndYear: "",
           currentLocation: "",
           skills: [],
+          outsideIndia: false,
           countryOutside: "",
           noticePeriod: "",
+          isServingNotice: false,
           lastWorkingDayYear: "",
           lastWorkingDayMonth: "",
           lastWorkingDayDate: "",
@@ -63,7 +67,7 @@ export default function EmploymentComponent() {
           industry: "",
           functionalArea: "",
           role: "",
-          previousCompany: [previousCompanySchema],
+          previousEmployment: [previousCompanySchema],
         }}
         onSubmit={(val) => {
           console.log(val);
@@ -131,7 +135,7 @@ export default function EmploymentComponent() {
                 <select
                   className="selectpicker form-control rounded-0"
                   data-size={5}
-                  autoFocus
+                  // autoFocus
                   id="currCompany"
                   name="currCompany"
                   onChange={handleChange}
@@ -165,9 +169,10 @@ export default function EmploymentComponent() {
                 <div className="row">
                   <div className="col-sm-6 col-md-6 col-xs-6 crny-btn">
                     <button
-                      onClick={() =>
-                        setFieldValue("annualSalaryCurrency", "INR")
-                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setFieldValue("annualSalaryCurrency", "INR");
+                      }}
                       className={`btnic ${
                         values.annualSalaryCurrency === "INR" ? "active" : ""
                       }`}
@@ -175,9 +180,10 @@ export default function EmploymentComponent() {
                       <i className="fa fa-rupee" />
                     </button>
                     <button
-                      onClick={() =>
-                        setFieldValue("annualSalaryCurrency", "USD")
-                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setFieldValue("annualSalaryCurrency", "USD");
+                      }}
                       className={`btnic ${
                         values.annualSalaryCurrency === "USD" ? "active" : ""
                       }`}
@@ -289,9 +295,16 @@ export default function EmploymentComponent() {
                   <option>11</option>
                 </select>
                 <span className="px-3">to</span>
-                <select className="selectpicker select-btn rounded-0">
-                  <option>Present</option>
-                  <option>1</option>
+                <select
+                  id="workingEndYear"
+                  name="workingEndYear"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.workingEndYear}
+                  className="selectpicker select-btn rounded-0"
+                >
+                  <option value="present">Present</option>
+                  <option value="1">1</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
@@ -302,6 +315,7 @@ export default function EmploymentComponent() {
                   <option>9</option>
                   <option>10</option>
                 </select>
+                <span>{formikHelper(touched, errors, "workingEndYear")}</span>
                 {formikHelper(touched, errors, "workingSinceYear")}
                 {formikHelper(touched, errors, "workingSinceMonth")}
               </div>
@@ -330,27 +344,37 @@ export default function EmploymentComponent() {
                 />
                 {formikHelper(touched, errors, "currentLocation")}
                 <p className="small">
-                  <input type="checkbox" className="mt-2" /> Outside India
+                  <input
+                    checked={values.outsideIndia}
+                    onChange={() =>
+                      setFieldValue("outsideIndia", !values.outsideIndia)
+                    }
+                    type="checkbox"
+                    className="mt-2"
+                  />{" "}
+                  Outside India
                 </p>
-                <select
-                  className="mdb-select md-form form-control rounded-0"
-                  searchable="Search here.."
-                  id="countryOutside"
-                  name="countryOutside"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.countryOutside}
-                >
-                  <option value disabled value={1}>
-                    Select Country
-                  </option>
-                  <option value={1}>USA</option>
-                  <option value={2}>Germany</option>
-                  <option value={3}>France</option>
-                  <option value={3}>Poland</option>
-                  <option value={3}>India</option>
-                  <option value={3}>Japan</option>
-                </select>
+                {values.outsideIndia && (
+                  <select
+                    className="mdb-select md-form form-control rounded-0"
+                    searchable="Search here.."
+                    id="countryOutside"
+                    name="countryOutside"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.countryOutside}
+                  >
+                    <option value disabled value={1}>
+                      Select Country
+                    </option>
+                    <option value={1}>USA</option>
+                    <option value={2}>Germany</option>
+                    <option value={3}>France</option>
+                    <option value={3}>Poland</option>
+                    <option value={3}>India</option>
+                    <option value={3}>Japan</option>
+                  </select>
+                )}
               </div>
               <div className="col-sm-6"></div>
               <div className="col-sm-3">
@@ -385,91 +409,100 @@ export default function EmploymentComponent() {
                   <option value={6}>6</option>
                 </select>
                 <span className="small">
-                  <input type="checkbox" className="mt-2" /> Serving notice
-                  period
+                  <input
+                    checked={values.isServingNotice}
+                    onChange={() =>
+                      setFieldValue("isServingNotice", !values.isServingNotice)
+                    }
+                    type="checkbox"
+                    className="mt-2"
+                  />{" "}
+                  Serving notice period
                 </span>
               </div>
             </div>
-            <div className="form-group row mb-4">
-              <label
-                htmlFor="phoneNumber"
-                className="col-sm-3 col-form-label text-right nostar"
-              >
-                {" "}
-                Last Working Day
-              </label>
-              <div className="col-sm-6">
-                <select
-                  id="lastWorkingDayYear"
-                  name="lastWorkingDayYear"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastWorkingDayYear}
-                  className="selectpicker select-btn rounded-0"
+            {values.isServingNotice && (
+              <div className="form-group row mb-4">
+                <label
+                  htmlFor="phoneNumber"
+                  className="col-sm-3 col-form-label text-right nostar"
                 >
-                  <option>Select</option>
-                  <option>2011</option>
-                  <option>2012</option>
-                  <option>2013</option>
-                  <option>2014</option>
-                  <option>2015</option>
-                  <option>2016</option>
-                  <option>2017</option>
-                  <option>2018</option>
-                  <option>2019</option>
-                  <option>2020</option>
-                </select>
-                <span> Year </span>
-                <select
-                  id="lastWorkingDayMonth"
-                  name="lastWorkingDayMonth"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastWorkingDayMonth}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Select</option>
-                  <option>Jan</option>
-                  <option>Feb</option>
-                  <option>Mar</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>Aug</option>
-                  <option>Sep</option>
-                  <option>Oct</option>
-                  <option>Nov</option>
-                  <option>Dec</option>
-                </select>
-                <span> Month </span>
-                <select
-                  id="lastWorkingDayDate"
-                  name="lastWorkingDayDate"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.lastWorkingDayDate}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Select</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                </select>
-                <span> Date </span>
+                  {" "}
+                  Last Working Day
+                </label>
+                <div className="col-sm-6">
+                  <select
+                    id="lastWorkingDayYear"
+                    name="lastWorkingDayYear"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.lastWorkingDayYear}
+                    className="selectpicker select-btn rounded-0"
+                  >
+                    <option>Select</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option>2018</option>
+                    <option>2019</option>
+                    <option>2020</option>
+                  </select>
+                  <span> Year </span>
+                  <select
+                    id="lastWorkingDayMonth"
+                    name="lastWorkingDayMonth"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.lastWorkingDayMonth}
+                    className="selectpicker select-btn rounded-0"
+                  >
+                    <option>Select</option>
+                    <option>Jan</option>
+                    <option>Feb</option>
+                    <option>Mar</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>Aug</option>
+                    <option>Sep</option>
+                    <option>Oct</option>
+                    <option>Nov</option>
+                    <option>Dec</option>
+                  </select>
+                  <span> Month </span>
+                  <select
+                    id="lastWorkingDayDate"
+                    name="lastWorkingDayDate"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.lastWorkingDayDate}
+                    className="selectpicker select-btn rounded-0"
+                  >
+                    <option>Select</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                  </select>
+                  <span> Date </span>
+                </div>
+                <div className="col-sm-3">
+                  <span className="r-text"> </span>
+                </div>
               </div>
-              <div className="col-sm-3">
-                <span className="r-text"> </span>
-              </div>
-            </div>
+            )}
             <div className="form-group row mb-4">
               <label
                 htmlFor="phoneNumber"
@@ -480,7 +513,10 @@ export default function EmploymentComponent() {
               </label>
               <div className="col-sm-6 crny-btn">
                 <button
-                  onClick={() => setFieldValue("newSalaryCurrency", "INR")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setFieldValue("newSalaryCurrency", "INR");
+                  }}
                   className={`btnic ${
                     values.newSalaryCurrency === "INR" ? "active" : ""
                   }`}
@@ -488,7 +524,10 @@ export default function EmploymentComponent() {
                   <i className="fa fa-rupee" />
                 </button>
                 <button
-                  onClick={() => setFieldValue("newSalaryCurrency", "USD")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setFieldValue("newSalaryCurrency", "USD");
+                  }}
                   className={`btnic ${
                     values.newSalaryCurrency === "USD" ? "active" : ""
                   }`}
@@ -713,168 +752,20 @@ export default function EmploymentComponent() {
                 <span className="r-text"> </span>
               </div>
             </div>
-            <div className="form-group row mb-4">
-              <div className="col-sm-12 offset-sm-3">
-                <h6>Previous Employment</h6>
-              </div>
-              <label
-                htmlFor="Name"
-                className="col-sm-3 col-form-label text-right nostar"
-              >
-                {" "}
-                Designation
-              </label>
-              <div className="col-sm-6">
-                <input
-                  id="prevDesignation"
-                  name="prevDesignation"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevDesignation}
-                  type="text"
-                  placeholder="Your job title"
-                  className="form-control rounded-0"
-                />
-              </div>
-              <div className="col-sm-3">
-                <span className="r-text"> Job Title/Role </span>
-              </div>
-            </div>
-            <div className="form-group row mb-4">
-              <label
-                htmlFor="Name"
-                className="col-sm-3 col-form-label text-right nostar"
-              >
-                {" "}
-                Company
-              </label>
-              <div className="col-sm-6">
-                <input
-                  id="prevCompany"
-                  name="prevCompany"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevCompany}
-                  type="text"
-                  placeholder="Name of the company/Organization"
-                  className="form-control rounded-0"
-                />
-              </div>
-              <div className="col-sm-3">
-                <span className="r-text"> </span>
-              </div>
-            </div>
-            <div className="form-group row mb-4">
-              <label
-                htmlFor="Name"
-                className="col-sm-3 col-form-label text-right nostar"
-              >
-                {" "}
-                Duration
-              </label>
-              <div className="col-sm-6 crny-btn">
-                <select
-                  id="prevDurationYear"
-                  name="prevDurationYear"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevDurationYear}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Year</option>
-                  <option>2011</option>
-                  <option>2012</option>
-                  <option>2013</option>
-                  <option>2014</option>
-                  <option>2015</option>
-                  <option>2016</option>
-                  <option>2017</option>
-                  <option>2018</option>
-                  <option>2019</option>
-                  <option>2020</option>
-                </select>
-                <select
-                  id="prevDurationMonth"
-                  name="prevDurationMonth"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevDurationMonth}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Month</option>
-                  <option>Jan</option>
-                  <option>Feb</option>
-                  <option>Mar</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>Aug</option>
-                  <option>Sep</option>
-                  <option>Oct</option>
-                  <option>Nov</option>
-                  <option>Dec</option>
-                </select>
-                <span className="px-3">to</span>
-                <select
-                  id="prevDurationYearTo"
-                  name="prevDurationYearTo"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevDurationYearTo}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Year</option>
-                  <option>2011</option>
-                  <option>2012</option>
-                  <option>2013</option>
-                  <option>2014</option>
-                  <option>2015</option>
-                  <option>2016</option>
-                  <option>2017</option>
-                  <option>2018</option>
-                  <option>2019</option>
-                  <option>2020</option>
-                </select>
-                <select
-                  id="prevDurationMonthTo"
-                  name="prevDurationMonthTo"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.prevDurationMonthTo}
-                  className="selectpicker select-btn rounded-0"
-                >
-                  <option>Month</option>
-                  <option>Jan</option>
-                  <option>Feb</option>
-                  <option>Mar</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>Aug</option>
-                  <option>Sep</option>
-                  <option>Oct</option>
-                  <option>Nov</option>
-                  <option>Dec</option>
-                </select>
-                <div className="horizontal-line" />
-              </div>
-              <div className="col-sm-3">
-                <span className="r-text"> </span>
-              </div>
-            </div>
 
             <FieldArray
-              name="previousCompany"
+              name="previousEmployment"
               render={(helper) => (
                 <>
-                  {values.previousCompany.map((company, idx) => {
+                  {values.previousEmployment.map((company, idx) => {
                     return (
                       <React.Fragment key={`prevCom-${idx}`}>
                         <div className="form-group row mb-4">
+                          {idx !== 0 && <div className="horizontal-line" />}
                           <div className="col-sm-12 offset-sm-3">
-                            <h6>Other Employment</h6>
+                            <h6>
+                              {idx === 0 ? `Previous` : `Other`} Employment
+                            </h6>
                           </div>
                           <label
                             htmlFor="Name"
@@ -890,7 +781,7 @@ export default function EmploymentComponent() {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousCompany[idx].prevDesignation
+                                values.previousEmployment[idx].prevDesignation
                               }
                               type="text"
                               placeholder="Your job title"
@@ -898,7 +789,7 @@ export default function EmploymentComponent() {
                             />
                           </div>
                           <div className="col-sm-3">
-                            <span className="r-text"> </span>
+                            <span className="r-text"> Job Title/Role </span>
                           </div>
                         </div>
                         <div className="form-group row mb-4">
@@ -915,7 +806,7 @@ export default function EmploymentComponent() {
                               name={`previousEmployment.${idx}.prevCompany`}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.previousCompany[idx].prevCompany}
+                              value={values.previousEmployment[idx].prevCompany}
                               type="text"
                               placeholder="Name of the company/Organization"
                               className="form-control rounded-0"
@@ -940,7 +831,7 @@ export default function EmploymentComponent() {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousCompany[idx].prevDurationYear
+                                values.previousEmployment[idx].prevDurationYear
                               }
                               className="selectpicker select-btn rounded-0"
                             >
@@ -962,7 +853,7 @@ export default function EmploymentComponent() {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousCompany[idx].prevDurationMonth
+                                values.previousEmployment[idx].prevDurationMonth
                               }
                               className="selectpicker select-btn rounded-0"
                             >
@@ -987,7 +878,8 @@ export default function EmploymentComponent() {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousCompany[idx].prevDurationYearTo
+                                values.previousEmployment[idx]
+                                  .prevDurationYearTo
                               }
                               className="selectpicker select-btn rounded-0"
                             >
@@ -1009,7 +901,8 @@ export default function EmploymentComponent() {
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousCompany[idx].prevDurationMonthTo
+                                values.previousEmployment[idx]
+                                  .prevDurationMonthTo
                               }
                               className="selectpicker select-btn rounded-0"
                             >
@@ -1035,6 +928,14 @@ export default function EmploymentComponent() {
                       </React.Fragment>
                     );
                   })}
+                  <p className="small add-more">
+                    <a
+                      onClick={() => helper.push(previousCompanySchema)}
+                      className="cursor-pointer"
+                    >
+                      <i className="fa fa-plus" /> Add more Employment
+                    </a>
+                  </p>
                 </>
               )}
             />
@@ -1043,6 +944,7 @@ export default function EmploymentComponent() {
               <div className="col-sm-12">
                 <div className="text-center conti-btn">
                   <input
+                    // onClick={(e) => e.preventDefault()}
                     type="submit"
                     className="submit-btn mt-3"
                     value="Continue"

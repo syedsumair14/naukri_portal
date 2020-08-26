@@ -1,6 +1,7 @@
 const mysql = require("../../utils/db/database");
 const { validationResult } = require("express-validator");
 const moment = require("moment");
+const bcrypt = require("bcrypt");
 
 exports.registerUser = async (req, res, next) => {
   let errors = validationResult(req);
@@ -26,6 +27,15 @@ exports.registerUser = async (req, res, next) => {
   let resume = req.file.path;
 
   try {
+    const hashedPw = await bcrypt.hash(password, 12);
+
+    if (!hashedPw) {
+      let error = new Error();
+      error.status = 500;
+      error.message = "Password hash failed";
+      return next(error);
+    }
+
     let query = `INSERT INTO user_account_details
         (user_role_id, name, email_id, password,
             mobile_no, work_exp_years, work_exp_month,
@@ -35,7 +45,7 @@ exports.registerUser = async (req, res, next) => {
       user_role_id,
       name,
       email_id,
-      password,
+      hashedPw,
       mobile_no,
       work_exp_years,
       work_exp_month,

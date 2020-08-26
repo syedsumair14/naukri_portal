@@ -7,6 +7,7 @@ import { Provider, useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ToastProvider, useToasts } from "react-toast-notifications";
 import { ToastAction } from "./GlobalStore/Actions/ToastAction";
+import Axios from "axios";
 
 export default function Routes() {
   const notifications = useSelector(
@@ -22,7 +23,14 @@ export default function Routes() {
     }
   }, [notifications.notification]);
 
-  console.log(notifications, "global");
+  console.log(notifications, "redux store");
+
+  Axios.interceptors.request.use(function (config) {
+    // const token = store.getState().session.token;
+    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+    console.log("network call", config);
+    return config;
+  });
   return (
     <>
       <Navbar />

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./style.css";
+import { useDispatch } from "react-redux";
+import { login } from "../../GlobalStore/Actions/loginAction";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -11,6 +14,7 @@ export default function Login() {
     },
     onSubmit: (values, onSubmitProps) => {
       console.log(values, "data");
+      dispatch(login(values));
       onSubmitProps.setSubmitting(false);
     },
     validationSchema: Yup.object({

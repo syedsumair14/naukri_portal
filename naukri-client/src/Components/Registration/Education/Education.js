@@ -19,9 +19,9 @@ const validationSchema = Yup.object({
 });
 
 const otherEducationSchema = {
-  qualification: "",
+  highest_qualification: "",
   board: "",
-  yearOfPassing: "",
+  year_of_passing: "",
   medium: "",
   percentage: "",
 };
@@ -156,20 +156,8 @@ export default function EducationComponent() {
                   onBlur={handleBlur}
                   value={values.email}
                 >
-                  <option value disabled>
-                    Please select your completion
-                  </option>
-                  <option>2019</option>
-                  <option>2018</option>
-                  <option>2017</option>
-                  <option>2016</option>
-                  <option>2015</option>
-                  <option>2014</option>
-                  <option>2013</option>
-                  <option>2012</option>
-                  <option>2011</option>
-                  <option>2010</option>
-                  <option>2009</option>
+                  <option value>Please select your completion</option>
+                  <option value="2019">2019</option>
                 </select>
               </div>
               <div className="col-sm-3">
@@ -192,17 +180,8 @@ export default function EducationComponent() {
                   value={values.email}
                   className="mdb-select md-form form-control rounded-0"
                 >
-                  <option value disabled>
-                    Please select language medium
-                  </option>
-                  <option>Hindi</option>
-                  <option>English</option>
-                  <option>Bengali</option>
-                  <option>Gujrati</option>
-                  <option>Kashmiri</option>
-                  <option>Manipuri</option>
-                  <option>Tamil</option>
-                  <option>Sanskrit</option>
+                  <option value>Please select language medium</option>
+                  <option value="1">Hindi</option>
                 </select>
                 {formikHelper(touched, errors, "medium")}
               </div>
@@ -229,19 +208,8 @@ export default function EducationComponent() {
                   <option value disabled>
                     Please select percentage
                   </option>
-                  <option> &lt; 40% </option>
-                  <option>40-44.9%</option>
-                  <option>45-49.9%</option>
-                  <option>50-54.9%</option>
-                  <option>55-59.9%</option>
-                  <option>60-64.9%</option>
-                  <option>65-69.9%</option>
-                  <option>70-74.9%</option>
-                  <option>75-79.9%</option>
-                  <option>80-84.9%</option>
-                  <option>85-89.9%</option>
-                  <option>90-94.9%</option>
-                  <option>95-99.9%</option>
+                  <option value="30.00"> &lt; 40% </option>
+                  <option value="40.05">40-44.9%</option>
                 </select>
                 {formikHelper(touched, errors, "percentage")}
               </div>
@@ -444,9 +412,8 @@ export default function EducationComponent() {
               name="otherEducation"
               render={(helper) => (
                 <>
-                  {console.log(helper, "helper")}
                   {values.otherEducation.map((education, idx) => (
-                    <>
+                    <React.Fragment key={`educat${idx}`}>
                       <div className="form-group row mb-4">
                         <div className="col-sm-12 offset-sm-3 mt-1">
                           <h6>Other Education</h6>
@@ -460,13 +427,15 @@ export default function EducationComponent() {
                         </label>
                         <div className="col-sm-6">
                           <select
-                            id={`otherEducation.${idx}.qualification`}
-                            name={`otherEducation.${idx}.qualification`}
+                            id={`otherEducation.${idx}.highest_qualification`}
+                            name={`otherEducation.${idx}.highest_qualificaion`}
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
+                            value={
+                              values.otherEducation[idx].highest_qualification
+                            }
                           >
                             <option value disabled>
                               Select your qualification
@@ -495,7 +464,7 @@ export default function EducationComponent() {
                             name={`otherEducation.${idx}.board`}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
+                            value={values.otherEducation[idx].board}
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                           >
@@ -522,28 +491,18 @@ export default function EducationComponent() {
                         </label>
                         <div className="col-sm-6">
                           <select
-                            id={`otherEducation.${idx}.yearOfPassing`}
-                            name={`otherEducation.${idx}.yearOfPassing`}
+                            id={`otherEducation.${idx}.year_of_passing`}
+                            name={`otherEducation.${idx}.year_of_passing`}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
+                            value={values.otherEducation[idx].year_of_passing}
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                           >
                             <option value disabled>
                               Please select your completion
                             </option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                            <option>2012</option>
-                            <option>2011</option>
-                            <option>2010</option>
-                            <option>2009</option>
+                            <option value="2019">2019</option>
                           </select>
                         </div>
                         <div className="col-sm-3">
@@ -563,20 +522,13 @@ export default function EducationComponent() {
                             name={`otherEducation.${idx}.medium`}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
+                            value={values.otherEducation[idx].medium}
                             className="mdb-select md-form form-control rounded-0"
                           >
                             <option value disabled>
                               Please select language medium
                             </option>
-                            <option>Hindi</option>
-                            <option>English</option>
-                            <option>Bengali</option>
-                            <option>Gujrati</option>
-                            <option>Kashmiri</option>
-                            <option>Manipuri</option>
-                            <option>Tamil</option>
-                            <option>Sanskrit</option>
+                            <option value="hindi">Hindi</option>
                           </select>
                         </div>
                         <div className="col-sm-3">
@@ -596,33 +548,18 @@ export default function EducationComponent() {
                             name={`otherEducation.${idx}.percentage`}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
-                            value={1}
+                            value={values.otherEducation[idx].percentage}
                             className="mdb-select md-form form-control rounded-0"
                           >
-                            <option value disabled>
-                              Please select percentage
-                            </option>
-                            <option> &lt; 40% </option>
-                            <option>40-44.9%</option>
-                            <option>45-49.9%</option>
-                            <option>50-54.9%</option>
-                            <option>55-59.9%</option>
-                            <option>60-64.9%</option>
-                            <option>65-69.9%</option>
-                            <option>70-74.9%</option>
-                            <option>75-79.9%</option>
-                            <option>80-84.9%</option>
-                            <option>85-89.9%</option>
-                            <option>90-94.9%</option>
-                            <option>95-99.9%</option>
+                            <option>Please select percentage</option>
+                            <option value={40.4}> &lt; 40% </option>
                           </select>
                         </div>
                         <div className="col-sm-3">
                           <span className="r-text"> </span>
                         </div>
                       </div>
-                    </>
+                    </React.Fragment>
                   ))}
                   <p className="small add-more">
                     <a

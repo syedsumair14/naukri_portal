@@ -1,5 +1,5 @@
 const { body } = require("express-validator");
-console.log("sanitize");
+
 exports.validateEmployment = [
   body("current_designation").not().isEmpty().withMessage("Select designation"),
   body("current_company").not().isEmpty().withMessage("Select company"),

@@ -21,12 +21,12 @@ const validationSchema = Yup.object({
 });
 
 const previousCompanySchema = {
-  prevDesignation: "",
-  prevCompany: "",
-  prevDurationMonth: "",
-  prevDurationYear: "",
-  prevDurationYearTo: "",
-  prevDurationMonthTo: "",
+  previous_employement_designation: "",
+  previous_employement_company: "",
+  previous_employement_start_month: "",
+  previous_employement_start_year: "",
+  previous_employement_end_year: "",
+  previous_employement_end_month: "",
 };
 
 export default function EmploymentComponent() {
@@ -199,16 +199,7 @@ export default function EmploymentComponent() {
                       className="selectpicker select-btn rounded-0"
                     >
                       <option>Select</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
+                      <option value="10">1</option>
                     </select>
                     <span> Lakhs </span>
                     {formikHelper(touched, errors, "annualSalary")}
@@ -223,17 +214,7 @@ export default function EmploymentComponent() {
                       className="selectpicker select-btn rounded-0"
                     >
                       <option>Select</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
+                      <option value="12">1</option>
                     </select>
                     <span> Thousand </span>
                     {formikHelper(touched, errors, "annualSalaryTh")}
@@ -262,16 +243,7 @@ export default function EmploymentComponent() {
                   className="selectpicker select-btn rounded-0"
                 >
                   <option>Year</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
+                  <option value="2003">1</option>
                 </select>
                 <select
                   id="workingSinceMonth"
@@ -282,17 +254,7 @@ export default function EmploymentComponent() {
                   className="selectpicker select-btn rounded-0"
                 >
                   <option>Month</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
+                  <option value="01">1</option>
                 </select>
                 <span className="px-3">to</span>
                 <select
@@ -305,15 +267,6 @@ export default function EmploymentComponent() {
                 >
                   <option value="present">Present</option>
                   <option value="1">1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
                 </select>
                 <span>{formikHelper(touched, errors, "workingEndYear")}</span>
                 {formikHelper(touched, errors, "workingSinceYear")}
@@ -440,16 +393,7 @@ export default function EmploymentComponent() {
                     className="selectpicker select-btn rounded-0"
                   >
                     <option>Select</option>
-                    <option>2011</option>
-                    <option>2012</option>
-                    <option>2013</option>
-                    <option>2014</option>
-                    <option>2015</option>
-                    <option>2016</option>
-                    <option>2017</option>
-                    <option>2018</option>
-                    <option>2019</option>
-                    <option>2020</option>
+                    <option value="2011">2011</option>
                   </select>
                   <span> Year </span>
                   <select
@@ -461,18 +405,7 @@ export default function EmploymentComponent() {
                     className="selectpicker select-btn rounded-0"
                   >
                     <option>Select</option>
-                    <option>Jan</option>
-                    <option>Feb</option>
-                    <option>Mar</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>Aug</option>
-                    <option>Sep</option>
-                    <option>Oct</option>
-                    <option>Nov</option>
-                    <option>Dec</option>
+                    <option value="01">Jan</option>
                   </select>
                   <span> Month </span>
                   <select
@@ -484,17 +417,7 @@ export default function EmploymentComponent() {
                     className="selectpicker select-btn rounded-0"
                   >
                     <option>Select</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
+                    <option value={1}>1</option>
                   </select>
                   <span> Date </span>
                 </div>
@@ -543,16 +466,7 @@ export default function EmploymentComponent() {
                   className="selectpicker select-btn rounded-0"
                 >
                   <option>Select</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
+                  <option value="1">1</option>
                 </select>
                 <span> Lakhs </span>
                 <select
@@ -564,17 +478,7 @@ export default function EmploymentComponent() {
                   className="selectpicker select-btn rounded-0"
                 >
                   <option>Select</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
+                  <option value="2">1</option>
                 </select>
                 <span> Thousand </span>
               </div>
@@ -776,12 +680,13 @@ export default function EmploymentComponent() {
                           </label>
                           <div className="col-sm-6">
                             <input
-                              id={`previousEmployment.${idx}.prevDesignation`}
-                              name={`previousEmployment.${idx}.prevDesignation`}
+                              id={`previousEmployment.${idx}.previous_employement_designation`}
+                              name={`previousEmployment.${idx}.previous_employement_designation`}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousEmployment[idx].prevDesignation
+                                values.previousEmployment[idx]
+                                  .previous_employement_designation
                               }
                               type="text"
                               placeholder="Your job title"
@@ -802,11 +707,14 @@ export default function EmploymentComponent() {
                           </label>
                           <div className="col-sm-6">
                             <input
-                              id={`previousEmployment.${idx}.prevCompany`}
-                              name={`previousEmployment.${idx}.prevCompany`}
+                              id={`previousEmployment.${idx}.previous_employement_company`}
+                              name={`previousEmployment.${idx}.previous_employement_company`}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.previousEmployment[idx].prevCompany}
+                              value={
+                                values.previousEmployment[idx]
+                                  .previous_employement_company
+                              }
                               type="text"
                               placeholder="Name of the company/Organization"
                               className="form-control rounded-0"
@@ -826,99 +734,61 @@ export default function EmploymentComponent() {
                           </label>
                           <div className="col-sm-6 crny-btn">
                             <select
-                              id={`previousEmployment.${idx}.prevDurationYear`}
-                              name={`previousEmployment.${idx}.prevDurationYear`}
+                              id={`previousEmployment.${idx}.previous_employement_start_year`}
+                              name={`previousEmployment.${idx}.previous_employement_start_year`}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousEmployment[idx].prevDurationYear
+                                values.previousEmployment[idx]
+                                  .previous_employement_start_year
                               }
                               className="selectpicker select-btn rounded-0"
                             >
                               <option>Year</option>
-                              <option>2011</option>
-                              <option>2012</option>
-                              <option>2013</option>
-                              <option>2014</option>
-                              <option>2015</option>
-                              <option>2016</option>
-                              <option>2017</option>
-                              <option>2018</option>
-                              <option>2019</option>
-                              <option>2020</option>
+                              <option value="2011">2011</option>
                             </select>
                             <select
-                              id={`previousEmployment.${idx}.prevDurationMonth`}
-                              name={`previousEmployment.${idx}.prevDurationMonth`}
+                              id={`previousEmployment.${idx}.previous_employement_start_month`}
+                              name={`previousEmployment.${idx}.previous_employement_start_month`}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
-                                values.previousEmployment[idx].prevDurationMonth
+                                values.previousEmployment[idx]
+                                  .previous_employement_start_month
                               }
                               className="selectpicker select-btn rounded-0"
                             >
                               <option>Month</option>
-                              <option>Jan</option>
-                              <option>Feb</option>
-                              <option>Mar</option>
-                              <option>April</option>
-                              <option>May</option>
-                              <option>June</option>
-                              <option>July</option>
-                              <option>Aug</option>
-                              <option>Sep</option>
-                              <option>Oct</option>
-                              <option>Nov</option>
-                              <option>Dec</option>
+                              <option value="01">Jan</option>
                             </select>
                             <span className="px-3">to</span>
                             <select
-                              id={`previousEmployment.${idx}.prevDurationYearTo`}
-                              name={`previousEmployment.${idx}.prevDurationYearTo`}
+                              id={`previousEmployment.${idx}.previous_employement_end_year`}
+                              name={`previousEmployment.${idx}.previous_employement_end_year`}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
                                 values.previousEmployment[idx]
-                                  .prevDurationYearTo
+                                  .previous_employement_end_year
                               }
                               className="selectpicker select-btn rounded-0"
                             >
                               <option>Year</option>
-                              <option>2011</option>
-                              <option>2012</option>
-                              <option>2013</option>
-                              <option>2014</option>
-                              <option>2015</option>
-                              <option>2016</option>
-                              <option>2017</option>
-                              <option>2018</option>
-                              <option>2019</option>
-                              <option>2020</option>
+                              <option value="2011">2011</option>
                             </select>
                             <select
-                              id={`previousEmployment.${idx}.prevDurationMonthTo`}
-                              name={`previousEmployment.${idx}.prevDurationMonthTo`}
+                              id={`previousEmployment.${idx}.previous_employement_end_month`}
+                              name={`previousEmployment.${idx}.previous_employement_end_month`}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={
                                 values.previousEmployment[idx]
-                                  .prevDurationMonthTo
+                                  .previous_employement_end_month
                               }
                               className="selectpicker select-btn rounded-0"
                             >
                               <option>Month</option>
-                              <option>Jan</option>
-                              <option>Feb</option>
-                              <option>Mar</option>
-                              <option>April</option>
-                              <option>May</option>
-                              <option>June</option>
-                              <option>July</option>
-                              <option>Aug</option>
-                              <option>Sep</option>
-                              <option>Oct</option>
-                              <option>Nov</option>
-                              <option>Dec</option>
+                              <option value="01">Jan</option>
                             </select>
                           </div>
                           <div className="col-sm-3">

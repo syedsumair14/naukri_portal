@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 
 exports.employmentUpdateController = async (req, res, next) => {
   let errors = validationResult(req);
-  console.log(errors);
+  // console.log(errors);
   if (!errors.isEmpty()) {
     let err = new Error();
     err.errors = errors;
@@ -11,7 +11,7 @@ exports.employmentUpdateController = async (req, res, next) => {
     return next(err);
   }
 
-  console.log(req.body);
+  // console.log(req.body);
 
   let {
     current_designation,
@@ -38,7 +38,7 @@ exports.employmentUpdateController = async (req, res, next) => {
     industry,
     functional_area,
     role,
-    employment_user_id = 1,
+    employment_user_id = req.user_id,
     other_employment,
     skills,
   } = req.body;
@@ -108,13 +108,13 @@ exports.employmentUpdateController = async (req, res, next) => {
 
     let skillData = [];
     for (let skill of skills) {
-      skillData.push([insertedEmploymentId, 1, skill]);
+      skillData.push([insertedEmploymentId, req.user_id, skill]);
     }
 
     let saveSkills = await mysql.query(saveSkillsQuery, [skillData]);
 
-    const saveEmploymentHistoryQuery = `INSERT INTO previous_employement_details 
-    (employement_detail_id, 
+    const saveEmploymentHistoryQuery = `INSERT INTO previous_employement_details
+    (employement_detail_id,
       previous_employement_designation,
     previous_employement_company,
     previous_employement_start_month,
@@ -138,6 +138,7 @@ exports.employmentUpdateController = async (req, res, next) => {
     let err = new Error();
     err.error = error;
     err.status = 500;
+    err.message = error.message;
     return next(err);
   }
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/NetworkLayer";
-import { DISPACTH_TOAST } from "./ActionList";
+import { DISPACTH_TOAST, SAVE_LOGIN_DETAILS } from "./ActionList";
 
 export const registerUser = (body) => async (dispatch) => {
   try {
@@ -31,6 +31,14 @@ export const registerUser = (body) => async (dispatch) => {
             appearance: "success",
             message: "Successfully Registered",
             notification: true,
+          },
+        });
+
+        return dispatch({
+          type: SAVE_LOGIN_DETAILS,
+          payload: {
+            userId: register.data.user_id,
+            token: register.data.token,
           },
         });
       }

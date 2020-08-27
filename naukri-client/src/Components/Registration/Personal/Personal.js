@@ -3,13 +3,15 @@ import "./Personal.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../../GlobalStore/Actions/registerUser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { saveLogin } from "../../../GlobalStore/Reducers/loginReducer";
 
 const PHONE_REGEX = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export default function PersonalComponent() {
   const [file, setFile] = useState(null);
   const [customErrors, setCustomErrors] = useState({});
+
   const dispatch = useDispatch();
 
   const FILE_SIZE = 1414 * 1414;

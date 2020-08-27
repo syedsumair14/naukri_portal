@@ -2,6 +2,7 @@ const mysql = require("../../utils/db/database");
 const { validationResult } = require("express-validator");
 const moment = require("moment");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res, next) => {
   let errors = validationResult(req);
@@ -57,10 +58,30 @@ exports.registerUser = async (req, res, next) => {
     if (!insertRow) {
       throw new Error("Insert error");
     }
-    return res.status(200).json({ result: insertRow, status: 200 });
+
+    const generateToken = await jwt.sign(
+      {
+        email: email_id,
+        id: insertRow.insertId,
+      },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: "5h",
+      }
+    );
+    console.log("here now");
+
+    return res.status(200).json({
+      result: insertRow,
+      status: 200,
+      message: "registered succesfully",
+      token: generateToken,
+      user_id: insertRow.insertId,
+    });
   } catch (err) {
     let error = new Error();
     error.errors = err;
+    error.message = err.message;
     next(error);
   }
 };

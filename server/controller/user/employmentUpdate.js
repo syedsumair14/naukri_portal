@@ -6,100 +6,47 @@ exports.employmentUpdateController = async (req, res, next) => {
   // console.log(errors);
   if (!errors.isEmpty()) {
     let err = new Error();
-    err.errors = errors;
+    err.errors = errors.array();
     err.status = 400;
     return next(err);
   }
 
   // console.log(req.body);
 
-  let {
-    current_designation,
-    current_company,
-    salary_currency,
-    salary_in_lakhs,
-    salary_in_thousands,
-    work_start_year,
-    work_start_month,
-    work_end_year,
-    current_location,
-    currently_outside_india,
-    current_country,
-    notice_period_duration,
-    is_serving_notice,
-    last_working_day_year,
-    last_working_day_month,
-    last_working_day_date,
-    new_offered_salary_currency,
-    new_offered_salary_in_lakhs,
-    new_offered_salary_in_thousands,
-    offered_designation,
-    new_company,
-    industry,
-    functional_area,
-    role,
-    employment_user_id = req.user_id,
-    other_employment,
-    skills,
-  } = req.body;
+  let details = {
+    current_designation: req.body.current_designation,
+    current_company: req.body.current_company,
+    salary_currency: req.body.salary_currency,
+    salary_in_lakhs: req.body.salary_in_lakhs,
+    salary_in_thousands: req.body.salary_in_thousands,
+    work_start_year: req.body.work_start_year,
+    work_start_month: req.body.work_start_month,
+    work_end_year: req.body.work_end_year,
+    current_location: req.body.current_location,
+    currently_outside_india: req.body.currently_outside_india,
+    current_country: req.body.current_country,
+    notice_period_duration: req.body.notice_period_duration,
+    is_serving_notice: req.body.is_serving_notice,
+    last_working_day_year: req.body.last_working_day_year,
+    last_working_day_month: req.body.last_working_day_month,
+    last_working_day_date: req.body.last_working_day_date,
+    new_offered_salary_currency: req.body.new_offered_salary_currency,
+    new_offered_salary_in_lakhs: req.body.new_offered_salary_in_lakhs,
+    new_offered_salary_in_thousands: req.body.new_offered_salary_in_thousands,
+    offered_designation: req.body.offered_designation,
+    new_company: req.body.new_company,
+    industry: req.body.industry,
+    functional_area: req.body.functional_area,
+    role: req.body.role,
+    employment_user_id: req.user_id,
+  };
 
-  const query = `INSERT INTO employement_details (
-    current_designation,
-    current_company,
-    salary_currency,
-    salary_in_lakhs,
-    salary_in_thousands,
-    work_start_year,
-    work_start_month,
-    work_end_year,
-    current_location,
-    currently_outside_india,
-    current_country,
-    notice_period_duration,
-    is_serving_notice,
-    last_working_day_year,
-    last_working_day_month,
-    last_working_day_date,
-    new_offered_salary_currency,
-    new_offered_salary_in_lakhs,
-    new_offered_salary_in_thousands,
-    offered_designation,
-    new_company,
-    industry,
-    functional_area,
-    role,
-    employment_user_id
-    ) VALUES 
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  let { other_employment, skills } = req.body;
+
+  const query = `INSERT INTO employement_details SET ?`;
 
   try {
-    const updateEmployement = await mysql.execute(query, [
-      current_designation,
-      current_company,
-      salary_currency,
-      salary_in_lakhs,
-      salary_in_thousands,
-      work_start_year,
-      work_start_month,
-      work_end_year,
-      current_location,
-      currently_outside_india,
-      current_country,
-      notice_period_duration,
-      is_serving_notice,
-      last_working_day_year,
-      last_working_day_month,
-      last_working_day_date,
-      new_offered_salary_currency,
-      new_offered_salary_in_lakhs,
-      new_offered_salary_in_thousands,
-      offered_designation,
-      new_company,
-      industry,
-      functional_area,
-      role,
-      employment_user_id,
-    ]);
+    const updateEmployement = await mysql.query(query, details);
     const insertedEmploymentId = updateEmployement[0].insertId;
 
     const saveSkillsQuery = `INSERT INTO skills 
@@ -133,7 +80,9 @@ exports.employmentUpdateController = async (req, res, next) => {
       [data]
     );
 
-    return res.status(201).json({ message: "succesfully updated" });
+    return res
+      .status(201)
+      .json({ message: "succesfully updated", status: 200 });
   } catch (error) {
     let err = new Error();
     err.error = error;

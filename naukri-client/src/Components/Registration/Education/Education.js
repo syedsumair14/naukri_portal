@@ -4,6 +4,8 @@ import "./Education.css";
 import { useFormik, Formik, FieldArray } from "formik";
 import formikHelper from "../ValidationHelper/FormikHelper";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { educationUpdateAction } from "../../../GlobalStore/Actions/EducationAction";
 
 const validationSchema = Yup.object({
   highestQualification: Yup.string().required("Choose qualifications"),
@@ -19,14 +21,15 @@ const validationSchema = Yup.object({
 });
 
 const otherEducationSchema = {
-  highest_qualification: "",
-  board: "",
-  year_of_passing: "",
-  medium: "",
-  percentage: "",
+  highest_qualification: null,
+  board: null,
+  year_of_passing: null,
+  medium: null,
+  percentage: null,
 };
 
 export default function EducationComponent() {
+  const dispatch = useDispatch();
   return (
     <div
       // className="tab-pane fade text-dark"
@@ -49,7 +52,10 @@ export default function EducationComponent() {
           otherEducation: [otherEducationSchema],
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, actions) => console.log(values, "submit values")}
+        onSubmit={(values, actions) => {
+          console.log(values, "submit values");
+          dispatch(educationUpdateAction(values));
+        }}
       >
         {({
           values,
@@ -428,7 +434,7 @@ export default function EducationComponent() {
                         <div className="col-sm-6">
                           <select
                             id={`otherEducation.${idx}.highest_qualification`}
-                            name={`otherEducation.${idx}.highest_qualificaion`}
+                            name={`otherEducation.${idx}.highest_qualification`}
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                             onChange={handleChange}
@@ -437,11 +443,9 @@ export default function EducationComponent() {
                               values.otherEducation[idx].highest_qualification
                             }
                           >
-                            <option value disabled>
-                              Select your qualification
-                            </option>
-                            <option value={1}>Doctorate/PhD</option>
-                            <option value={2}>Masters/Post-Graduation</option>
+                            <option value>Select your qualification</option>
+                            <option value={98}>Doctorate/PhD</option>
+                            <option value={99}>Masters/Post-Graduation</option>
                             <option value={3}>Graduation/Diploma</option>
                             <option value={4}>10th</option>
                             <option value={5}>12th</option>
@@ -468,9 +472,7 @@ export default function EducationComponent() {
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                           >
-                            <option value disabled>
-                              Please select board
-                            </option>
+                            <option value>Please select board</option>
                             <option value={1}>Andra Pradesh</option>
                             <option value={2}>Assam</option>
                             <option value={3}>Bihar</option>
@@ -499,9 +501,7 @@ export default function EducationComponent() {
                             className="mdb-select md-form form-control rounded-0"
                             searchable="Search here.."
                           >
-                            <option value disabled>
-                              Please select your completion
-                            </option>
+                            <option value>Please select your completion</option>
                             <option value="2019">2019</option>
                           </select>
                         </div>
@@ -525,9 +525,7 @@ export default function EducationComponent() {
                             value={values.otherEducation[idx].medium}
                             className="mdb-select md-form form-control rounded-0"
                           >
-                            <option value disabled>
-                              Please select language medium
-                            </option>
+                            <option value>Please select language medium</option>
                             <option value="hindi">Hindi</option>
                           </select>
                         </div>

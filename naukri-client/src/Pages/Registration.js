@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PersonalComponent from "../Components/Registration/Personal/Personal";
 import EmploymentComponent from "../Components/Registration/Employment/Employment";
 import EducationComponent from "../Components/Registration/Education/Education";
+import { useSelector } from "react-redux";
+import localStorageHelper from "../GlobalStore/Actions/loginAction";
 
 export default function Registration() {
-  const [activeTab, setActiveTab] = useState("personal");
+  const [activeTab, setActiveTab] = useState("employment");
+  const loginStore = useSelector(({ saveLogin }) => saveLogin);
+
+  useEffect(() => {
+    // const helper = new localStorageHelper();
+    // helper.removeData();
+  }, []);
+
+  useEffect(() => {
+    if (loginStore.userId && loginStore.token) {
+      setActiveTab("employment");
+    }
+  }, [loginStore]);
+
+  console.log("login store", loginStore);
 
   function showTabPages() {
     switch (activeTab) {
@@ -30,7 +46,15 @@ export default function Registration() {
                 className={`nav-item nav-link cursor-pointer ${
                   activeTab === "personal" ? "active" : ""
                 }`}
-                onClick={() => setActiveTab("personal")}
+                onClick={() => {
+                  if (loginStore.userId && loginStore.token) return;
+                  if (
+                    localStorage.getItem("userId") &&
+                    localStorage.getItem("token")
+                  )
+                    return;
+                  setActiveTab("personal");
+                }}
                 id="nav-Personal-tab"
                 data-toggle="tab"
                 role="tab"

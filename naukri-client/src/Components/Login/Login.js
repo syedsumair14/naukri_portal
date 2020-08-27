@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import "./style.css";
 import { useDispatch } from "react-redux";
 import { login } from "../../GlobalStore/Actions/loginAction";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -67,9 +68,9 @@ export default function Login() {
             />
           </div>
           <div className="form-group text-center">
-            <a href="#" className="ForgetPwd">
+            <Link to="/register" className="ForgetPwd">
               New Register Here{" "}
-            </a>
+            </Link>
           </div>
         </form>
       </div>

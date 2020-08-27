@@ -3,32 +3,25 @@ import { BASE_URL } from "../../utils/NetworkLayer";
 
 export const UpdateEmployment = (body) => async (dispatch) => {
   // let body = {
-  //   skills: ["java", "node"],
-  //   otherEmployement: [
+  //   skills: ["js", "react"],
+  //   previousEmployment: [
   //     {
-  //       previous_employement_designation: "dev",
-  //       previous_employement_company: "deeb",
-  //       previous_employement_start_month: 2,
-  //       previous_employement_start_year: 1,
-  //       previous_employement_end_year: 2,
-  //       previous_employement_end_month: 3,
-  //     },
-  //     {
-  //       previous_employement_designation: "dev2",
-  //       previous_employement_company: "deeb2",
-  //       previous_employement_start_month: 2,
-  //       previous_employement_start_year: 1,
-  //       previous_employement_end_year: 2,
-  //       previous_employement_end_month: 3,
+  //       previous_employement_designation: "as",
+  //       previous_employement_company: "as",
+  //       previous_employement_start_month: "12",
+  //       previous_employement_start_year: "2011",
+  //       previous_employement_end_year: "2012",
+  //       previous_employement_end_month: "12",
   //     },
   //   ],
   // };
+
   let data = {
     current_designation: body.designation,
     current_company: body.currCompany,
     salary_currency: body.annualSalaryCurrency,
-    salary_in_lakhs: body.annualSalary,
-    salary_in_thousands: body.annualSalaryTh,
+    salary_in_lakhs: Number(body.annualSalary),
+    salary_in_thousands: Number(body.annualSalaryTh),
     work_start_year: body.workingSinceYear,
     work_start_month: body.workingSinceMonth,
     work_end_year: body.workingEndYear,

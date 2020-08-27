@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Employment.css";
 import { useFormik, FieldArray, Formik } from "formik";
 import * as Yup from "yup";
@@ -21,12 +21,12 @@ const validationSchema = Yup.object({
 });
 
 const previousCompanySchema = {
-  previous_employement_designation: "",
-  previous_employement_company: "",
-  previous_employement_start_month: "",
-  previous_employement_start_year: "",
-  previous_employement_end_year: "",
-  previous_employement_end_month: "",
+  previous_employement_designation: null,
+  previous_employement_company: null,
+  previous_employement_start_month: null,
+  previous_employement_start_year: null,
+  previous_employement_end_year: null,
+  previous_employement_end_month: null,
 };
 
 export default function EmploymentComponent() {
@@ -586,7 +586,7 @@ export default function EmploymentComponent() {
                   data-size={9}
                 >
                   <option value={1}>Select industry that you work for</option>
-                  <option value={1}>Tata Consultancy</option>
+                  <option value={9}>Tata Consultancy</option>
                   <option value={2}>Infosys</option>
                   <option value={3}>HCL</option>
                   <option value={4}>Wipro</option>
@@ -645,7 +645,7 @@ export default function EmploymentComponent() {
                   data-size={9}
                 >
                   <option value={1}>Select the role that you work in</option>
-                  <option value={1}>Tata Consultancy</option>
+                  <option value={8}>Tata Consultancy</option>
                   <option value={2}>Infosys</option>
                   <option value={3}>HCL</option>
                   <option value={4}>Wipro</option>

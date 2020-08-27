@@ -1,8 +1,8 @@
 import Axios from "axios";
 import { BASE_URL } from "../../utils/NetworkLayer";
-import { DISPACTH_TOAST } from "./ActionList";
+import { DISPACTH_TOAST, SAVE_LOGIN_DETAILS } from "./ActionList";
 
-class localStorageHelper {
+export default class localStorageHelper {
   constructor(token, userId) {
     this.token = token;
     this.userId = userId;
@@ -11,9 +11,9 @@ class localStorageHelper {
     localStorage.setItem("token", this.token);
     localStorage.setItem("userId", this.userId);
   }
-  //   setDefaultHeaders() {
-  //     Axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
-  //   }
+  removeData() {
+    localStorage.clear();
+  }
 }
 
 export const login = (body) => async (dispatch) => {
@@ -28,11 +28,19 @@ export const login = (body) => async (dispatch) => {
           notification: true,
         },
       });
-      let saveUserData = new localStorageHelper(
-        tryLogin.data.token,
-        tryLogin.data.user_id
-      );
-      return saveUserData.saveData();
+
+      dispatch({
+        type: SAVE_LOGIN_DETAILS,
+        payload: {
+          userId: tryLogin.data.user_id,
+          token: tryLogin.data.token,
+        },
+      });
+      // let saveUserData = new localStorageHelper(
+      //   tryLogin.data.token,
+      //   tryLogin.data.user_id
+      // );
+      // return saveUserData.saveData();
       //   return saveUserData.setDefaultHeaders();
     }
     throw new Error("Something went wrong");

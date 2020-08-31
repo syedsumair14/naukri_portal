@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { BASE_URL } from "../../utils/NetworkLayer";
 import { object } from "yup";
+import { DISPACTH_TOAST } from "./ActionList";
 
 export const educationUpdateAction = (body) => (dispatch) => {
   let newOtherEducation = [];
@@ -28,6 +29,13 @@ export const educationUpdateAction = (body) => (dispatch) => {
     let updateEducation = Axios.put(BASE_URL + "user/educationUpdate", data);
     console.log(updateEducation);
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: DISPACTH_TOAST,
+      payload: {
+        appearance: "error",
+        message: error.message || "Something went wrong",
+        notification: true,
+      },
+    });
   }
 };

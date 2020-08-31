@@ -4,10 +4,14 @@ import EmploymentComponent from "../Components/Registration/Employment/Employmen
 import EducationComponent from "../Components/Registration/Education/Education";
 import { useSelector } from "react-redux";
 import localStorageHelper from "../GlobalStore/Actions/loginAction";
+import { employmentReducer } from "../GlobalStore/Reducers/EmploymentReducer";
 
 export default function Registration() {
   const [activeTab, setActiveTab] = useState("employment");
   const loginStore = useSelector(({ saveLogin }) => saveLogin);
+  const employmentStore = useSelector(
+    ({ employmentReducer }) => employmentReducer
+  );
 
   useEffect(() => {
     // const helper = new localStorageHelper();
@@ -20,7 +24,16 @@ export default function Registration() {
     }
   }, [loginStore]);
 
-  console.log("login store", loginStore);
+  useEffect(() => {
+    if (
+      employmentStore.successfulUpdate &&
+      employmentStore.successfulUpdate === true
+    ) {
+      setActiveTab("education");
+    }
+  }, [employmentStore]);
+
+  console.log("login store", loginStore, employmentStore);
 
   function showTabPages() {
     switch (activeTab) {

@@ -4,3 +4,4 @@ export const DISPACTH_TOAST = "DISPATCH_TOAST";
 export const LOGIN = "LOGIN";
 
 export const SAVE_LOGIN_DETAILS = "SAVE_LOGIN_DETAILS";
+export const EMPLOYMENT_UPDATE = "EMPLOYMENT_UPDATE";

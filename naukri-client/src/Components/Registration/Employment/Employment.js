@@ -32,6 +32,13 @@ const previousCompanySchema = {
 export default function EmploymentComponent() {
   const [tags, setTags] = useState([]);
   const dispatch = useDispatch();
+  const [isSuccesful, setIsSuccessful] = useState(false);
+
+  useEffect(() => {
+    if (isSuccesful && isSuccesful === true) {
+      alert("done");
+    }
+  }, [isSuccesful]);
 
   return (
     <div
@@ -42,36 +49,40 @@ export default function EmploymentComponent() {
     >
       <Formik
         initialValues={{
-          designation: "",
-          currCompany: "",
-          annualSalary: "",
-          annualSalaryTh: "",
-          annualSalaryCurrency: "",
-          workingSinceYear: "",
-          workingSinceMonth: "",
-          workingEndYear: "",
-          currentLocation: "",
+          designation: null,
+          currCompany: null,
+          annualSalary: null,
+          annualSalaryTh: null,
+          annualSalaryCurrency: null,
+          workingSinceYear: null,
+          workingSinceMonth: null,
+          workingEndYear: null,
+          currentLocation: null,
           skills: [],
           outsideIndia: false,
-          countryOutside: "",
-          noticePeriod: "",
+          countryOutside: null,
+          noticePeriod: null,
           isServingNotice: false,
-          lastWorkingDayYear: "",
-          lastWorkingDayMonth: "",
-          lastWorkingDayDate: "",
-          newSalaryLakhs: "",
-          newSalaryThousand: "",
-          newSalaryCurrency: "",
-          offerDesig: "",
-          newCompany: "",
-          industry: "",
-          functionalArea: "",
-          role: "",
+          lastWorkingDayYear: null,
+          lastWorkingDayMonth: null,
+          lastWorkingDayDate: null,
+          newSalaryLakhs: null,
+          newSalaryThousand: null,
+          newSalaryCurrency: null,
+          offerDesig: null,
+          newCompany: null,
+          industry: null,
+          functionalArea: null,
+          role: null,
           previousEmployment: [previousCompanySchema],
         }}
-        onSubmit={(val) => {
+        onSubmit={async (val) => {
           console.log(val);
-          dispatch(UpdateEmployment(val));
+          let successfulUpdate = await dispatch(UpdateEmployment(val));
+          if (successfulUpdate) {
+            console.log(successfulUpdate, "successful");
+            setIsSuccessful(true);
+          }
         }}
         validationSchema={validationSchema}
       >

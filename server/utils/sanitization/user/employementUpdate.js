@@ -20,7 +20,7 @@ exports.validateEmployment = [
     .not()
     .isEmpty()
     .withMessage("Select if outside"),
-  body("current_country").not().isEmpty().withMessage("Select Current country"),
+  // body("current_country").not().isEmpty().withMessage("Select Current country"),
   body("is_serving_notice")
     .not()
     .isEmpty()

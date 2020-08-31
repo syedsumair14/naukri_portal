@@ -11,8 +11,6 @@ exports.employmentUpdateController = async (req, res, next) => {
     return next(err);
   }
 
-  // console.log(req.body);
-
   let details = {
     current_designation: req.body.current_designation,
     current_company: req.body.current_company,
@@ -43,10 +41,10 @@ exports.employmentUpdateController = async (req, res, next) => {
 
   let { other_employment, skills } = req.body;
 
-  const query = `INSERT INTO employement_details SET ?`;
+  const query = `REPLACE INTO employement_details SET ?`;
 
   try {
-    const updateEmployement = await mysql.query(query, details);
+    const updateEmployement = await mysql.query(query, details, details);
     const insertedEmploymentId = updateEmployement[0].insertId;
 
     const saveSkillsQuery = `INSERT INTO skills 
@@ -82,7 +80,7 @@ exports.employmentUpdateController = async (req, res, next) => {
 
     return res
       .status(201)
-      .json({ message: "succesfully updated", status: 200 });
+      .json({ message: "succesfully updated", status: 201 });
   } catch (error) {
     let err = new Error();
     err.error = error;

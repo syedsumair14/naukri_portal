@@ -61,7 +61,7 @@ export const registerUser = (body) => async (dispatch) => {
       type: DISPACTH_TOAST,
       payload: {
         appearance: "error",
-        message: "Something went wrong",
+        message: error.message || "Something went wrong",
         notification: true,
       },
     });
